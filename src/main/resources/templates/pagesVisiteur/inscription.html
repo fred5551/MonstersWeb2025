@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html th:replace="base :: html" lang="fr" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="content">
+    <div class="page active">
+        <div class="hero-section">
+            <h1>Créer un Compte</h1>
+            <p class="hero-subtitle">Rejoignez l'aventure Monsters Web !</p>
+
+            <div class="auth-section" style="max-width: 500px; margin: 2rem auto;">
+                <form id="inscription-form" class="auth-form active">
+                    <h2>Inscription</h2>
+
+                    <input type="text" id="register-username-page" placeholder="Pseudo" required minlength="3">
+
+                    <input type="email" id="register-email-page" placeholder="Email" required>
+
+                    <input type="password" id="register-password-page" placeholder="Mot de passe" required minlength="6">
+
+                    <input type="password" id="register-password-confirm" placeholder="Confirmer le mot de passe" required>
+
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="rgpd-accept-page" required>
+                        J'accepte la <a th:href="@{/rgpd}">politique de confidentialité</a>
+                    </label>
+
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="newsletter-accept">
+                        Je souhaite recevoir la newsletter
+                    </label>
+
+                    <button type="submit" style="background: #7FFF00; color: #1C1E26; border: none; padding: 1rem; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 1rem;">
+                        S'inscrire
+                    </button>
+                </form>
+
+                <div style="margin-top: 2rem; text-align: center;">
+                    <p style="color: #b0b0b0;">
+                        Vous avez déjà un compte ?
+                        <a th:href="@{/}" style="color: #7FFF00; text-decoration: none; font-weight: 600;">Connectez-vous</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</html>

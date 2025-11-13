@@ -1,0 +1,68 @@
+<!doctype html>
+<html th:replace="base :: html" lang="fr" xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="content">
+    <main class="py-5">
+        <div class="hero-section">
+            <h1>Bienvenue dans Monsters Web</h1>
+            <p class="hero-subtitle">Collectionnez, entraînez et affrontez des monstres légendaires</p>
+
+            <!-- Section Authentification -->
+            <div class="auth-section" id="auth-section">
+                <div class="auth-tabs">
+                    <button class="auth-tab active" data-tab="login">Connexion</button>
+                    <button class="auth-tab" data-tab="register">Inscription</button>
+                </div>
+
+                <!-- Formulaire de connexion -->
+                <div id="login-form" class="auth-form active">
+                    <h2>Connexion</h2>
+                    <input type="text" id="login-username" placeholder="Pseudo" required>
+                    <input type="password" id="login-password" placeholder="Mot de passe" required>
+                    <button id="login-submit">Se connecter</button>
+                </div>
+
+                <!-- Formulaire d'inscription -->
+                <div id="register-form" class="auth-form">
+                    <h2>Inscription</h2>
+                    <input type="text" id="register-username" placeholder="Pseudo" required>
+                    <input type="email" id="register-email" placeholder="Email" required>
+                    <input type="password" id="register-password" placeholder="Mot de passe" required>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="rgpd-accept" required>
+                        J'accepte la <a href="#" id="rgpd-link">politique de confidentialité</a>
+                    </label>
+                    <button id="register-submit">S'inscrire</button>
+                </div>
+            </div>
+
+            <!-- Dashboard (visible après connexion) -->
+            <div id="dashboard-section" class="dashboard hidden">
+                <h2>Tableau de Bord</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>Monstres capturés</h3>
+                        <p class="stat-value" id="monsters-count">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Combats gagnés</h3>
+                        <p class="stat-value" id="wins-count">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Niveau</h3>
+                        <p class="stat-value" id="player-level">1</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Monster $</h3>
+                        <p class="stat-value" id="gold-count">100</p>
+                    </div>
+                </div>
+
+                <!-- Barre d'XP du joueur -->
+                <div id="player-xp-bar" class="mt-4"></div>
+            </div>
+        </div>
+    </main>
+</div>
+
+</html>

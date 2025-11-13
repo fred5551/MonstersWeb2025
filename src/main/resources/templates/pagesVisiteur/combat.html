@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html th:replace="base :: html" lang="fr" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="content">
+    <div class="page active" id="combat-page">
+        <h1>Arène de Combat</h1>
+        <div class="combat-container">
+            <!-- Configuration du combat -->
+            <div class="combat-setup" id="combat-setup">
+                <h2>Préparer le combat</h2>
+
+                <!-- Sélection du monstre -->
+                <div class="monster-selection">
+                    <h3>Choisir votre monstre</h3>
+                    <div id="combat-team-selection" class="combat-team-selection">
+                        <!-- Les monstres de l'équipe seront ajoutés ici par JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Sélection de l'adversaire -->
+                <div class="opponent-selection">
+                    <h3>Choisir un adversaire</h3>
+                    <div class="opponents-grid">
+                        <div class="opponent-card" data-difficulty="easy">
+                            <h3>Débutant</h3>
+                            <p>Niveau 1-3</p>
+                            <button class="challenge-btn">Défier</button>
+                        </div>
+                        <div class="opponent-card" data-difficulty="medium">
+                            <h3>Intermédiaire</h3>
+                            <p>Niveau 4-7</p>
+                            <button class="challenge-btn">Défier</button>
+                        </div>
+                        <div class="opponent-card" data-difficulty="hard">
+                            <h3>Expert</h3>
+                            <p>Niveau 8-10</p>
+                            <button class="challenge-btn">Défier</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Arène de combat -->
+            <div class="combat-arena hidden" id="combat-arena">
+                <div class="combat-field">
+                    <!-- Monstre du joueur -->
+                    <div class="player-side">
+                        <h3>Votre monstre</h3>
+                        <div id="player-monster" class="combat-monster">
+                            <div class="monster-sprite">🐉</div>
+                            <div class="monster-info">
+                                <h4 id="player-monster-name">-</h4>
+                                <div class="hp-bar">
+                                    <div id="player-hp-fill" class="hp-fill"></div>
+                                </div>
+                                <p id="player-hp-text">PV: 100/100</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="vs-divider">VS</div>
+
+                    <!-- Monstre adverse -->
+                    <div class="enemy-side">
+                        <h3>Adversaire</h3>
+                        <div id="enemy-monster" class="combat-monster">
+                            <div class="monster-sprite">👹</div>
+                            <div class="monster-info">
+                                <h4 id="enemy-monster-name">-</h4>
+                                <div class="hp-bar">
+                                    <div id="enemy-hp-fill" class="hp-fill"></div>
+                                </div>
+                                <p id="enemy-hp-text">PV: 100/100</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Journal de combat -->
+                <div class="combat-log" id="combat-log">
+                    <p>Le combat commence !</p>
+                </div>
+
+                <!-- Actions de combat -->
+                <div class="combat-actions" id="combat-actions">
+                    <button id="attack-btn">Attaquer</button>
+                    <button id="defend-btn">Défendre</button>
+                    <button id="surrender-btn">Abandonner</button>
+                </div>
+
+                <!-- Résultat du combat -->
+                <div class="combat-result hidden" id="combat-result">
+                    <h2 id="result-title"></h2>
+                    <p id="result-message"></p>
+                    <button id="new-combat-btn">Nouveau Combat</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</html>

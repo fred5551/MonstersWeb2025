@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html th:replace="base :: html" lang="fr" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="content">
+    <div class="page active" id="team-page">
+        <h1>Mon Équipe</h1>
+        <div class="team-container">
+            <!-- Équipe active -->
+            <div class="team-header">
+                <h2>Équipe Active</h2>
+                <p>Maximum 6 monstres</p>
+            </div>
+            <div id="active-team" class="monsters-grid">
+                <!-- Les monstres actifs seront ajoutés ici par JavaScript -->
+                <p style="grid-column:1/-1; text-align:center; color:#b0b0b0;">Aucun monstre dans l'équipe active</p>
+            </div>
+
+            <!-- Monstres en réserve -->
+            <div class="team-header">
+                <h2>Monstres en Réserve</h2>
+            </div>
+            <div id="reserve-monsters" class="monsters-grid">
+                <!-- Les monstres en réserve seront ajoutés ici par JavaScript -->
+                <p style="grid-column:1/-1; text-align:center; color:#b0b0b0;">Aucun monstre en réserve</p>
+            </div>
+        </div>
+    </div>
+</div>
+</html>

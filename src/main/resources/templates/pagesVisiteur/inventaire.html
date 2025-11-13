@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html th:replace="base :: html" lang="fr" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="content">
+    <div class="page active" id="inventory-page">
+        <h1>Inventaire</h1>
+        <div class="inventory-container">
+            <!-- Onglets de l'inventaire -->
+            <div class="inventory-tabs">
+                <button class="inv-tab active" data-inv-tab="potions">Potions</button>
+                <button class="inv-tab" data-inv-tab="equipment">Équipement</button>
+                <button class="inv-tab" data-inv-tab="items">Objets</button>
+            </div>
+
+            <!-- Grilles d'inventaire -->
+            <div id="potions-inv" class="inventory-grid active">
+                <!-- Les potions seront ajoutées ici par JavaScript -->
+            </div>
+            <div id="equipment-inv" class="inventory-grid">
+                <!-- L'équipement sera ajouté ici par JavaScript -->
+            </div>
+            <div id="items-inv" class="inventory-grid">
+                <!-- Les objets seront ajoutés ici par JavaScript -->
+            </div>
+        </div>
+    </div>
+</div>
+</html>
