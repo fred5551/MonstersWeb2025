@@ -1,5 +1,28 @@
 <!DOCTYPE html>
 <html th:replace="base :: html" lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monsters Web</title>
+    <link rel="stylesheet" href="../../static/css/style.css">
+    <!DOCTYPE html>
+</head>
+<header id="header">
+    <div class="header-content">
+        <div class="logo">🐲 Monsters Web</div>
+        <nav id="main-nav">
+            <a class="nav-btn" href="../index.html">Accueil </a>
+            <a class="nav-btn" href="pagesVisiteur/exploration.html">Exploration</a>
+            <a class="nav-btn" href="pagesVisiteur/mon-equipe.html">Mon Équipe</a>
+            <a class="nav-btn" href="pagesVisiteur/inventaire.html" data-page="inventory">Inventaire</a>
+            <a class="nav-btn" href="pagesVisiteur/combat.html">Combat</a>
+        </nav>
+        <div class="user-info">
+            <span id="user-name">Joueur</span>
+            <button id="logout-btn">Déconnexion</button>
+        </div>
+    </div>
+</header>
 <div th:fragment="content">
     <div class="page active" id="inventory-page">
         <h1>Inventaire</h1>
@@ -24,4 +47,5 @@
         </div>
     </div>
 </div>
+<script src="/static/js/game.js"></script>
 </html>
