@@ -753,4 +753,4 @@ function showNotification(message, type = 'info') {
     document.body.appendChild(notification);
 
     setTimeout(() => {
-        notification.style.animation = 'slideOut'}
+        notification.style.animation = 'slideOut'})}
