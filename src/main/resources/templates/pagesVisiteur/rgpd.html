@@ -1,107 +1,104 @@
 <!DOCTYPE html>
-<html th:replace="base :: html" lang="fr" xmlns:th="http://www.thymeleaf.org">
+<html lang="fr" xmlns:th="http://www.thymeleaf.org" th:replace="~{base :: html}">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Monsters Web</title>
-    <link rel="stylesheet" href="../../static/css/style.css">
-    <!DOCTYPE html>
+    <title>Monsters Web - RGPD</title>
 </head>
+<body>
 <div th:fragment="content">
-    <div class="page active">
-        <div style="max-width: 900px; margin: 2rem auto; padding: 2rem; background: rgba(255, 255, 255, 0.05); border-radius: 16px; border: 2px solid rgba(127, 255, 0, 0.3);">
-            <h1 style="color: #7FFF00; text-align: center; margin-bottom: 2rem;">Politique de Confidentialité RGPD</h1>
+    <div style="max-width: 900px; margin: 2rem auto; padding: 2rem; background: rgba(255, 255, 255, 0.05); border-radius: 16px; border: 2px solid rgba(127, 255, 0, 0.3);">
+        <h1 style="color: #7FFF00; text-align: center; margin-bottom: 2rem;">Politique de Confidentialité RGPD</h1>
 
-            <div style="color: #b0b0b0; line-height: 1.8;">
-                <h2 style="color: #7FFF00; margin-top: 2rem;">1. Collecte des données</h2>
-                <p>
-                    Dans le cadre de l'utilisation de Monsters Web, nous collectons les données personnelles suivantes :
-                </p>
-                <ul style="margin-left: 2rem;">
-                    <li>Pseudo ou nom d'utilisateur</li>
-                    <li>Adresse e-mail</li>
-                    <li>Mot de passe (crypté)</li>
-                    <li>Statistiques de jeu (monstres capturés, combats gagnés, niveau, etc.)</li>
-                </ul>
+        <div style="color: #b0b0b0; line-height: 1.8;">
+            <h2 style="color: #7FFF00; margin-top: 2rem;">1. Collecte des données</h2>
+            <p>
+                Dans le cadre de l'utilisation de Monsters Web, nous collectons les données personnelles suivantes :
+            </p>
+            <ul style="margin-left: 2rem;">
+                <li>Pseudo ou nom d'utilisateur</li>
+                <li>Adresse e-mail</li>
+                <li>Mot de passe (crypté)</li>
+                <li>Statistiques de jeu (monstres capturés, combats gagnés, niveau, etc.)</li>
+            </ul>
 
-                <h2 style="color: #7FFF00; margin-top: 2rem;">2. Utilisation des données</h2>
-                <p>
-                    Les données collectées sont utilisées exclusivement pour :
-                </p>
-                <ul style="margin-left: 2rem;">
-                    <li>Permettre l'authentification et l'accès à votre compte</li>
-                    <li>Sauvegarder votre progression dans le jeu</li>
-                    <li>Améliorer votre expérience de jeu</li>
-                    <li>Communiquer avec vous concernant le jeu (si vous y consentez)</li>
-                </ul>
-                <p>
-                    Vos données ne sont <strong>jamais partagées avec des tiers</strong> à des fins commerciales.
-                </p>
+            <h2 style="color: #7FFF00; margin-top: 2rem;">2. Utilisation des données</h2>
+            <p>
+                Les données collectées sont utilisées exclusivement pour :
+            </p>
+            <ul style="margin-left: 2rem;">
+                <li>Permettre l'authentification et l'accès à votre compte</li>
+                <li>Sauvegarder votre progression dans le jeu</li>
+                <li>Améliorer votre expérience de jeu</li>
+                <li>Communiquer avec vous concernant le jeu (si vous y consentez)</li>
+            </ul>
+            <p>
+                Vos données ne sont <strong>jamais partagées avec des tiers</strong> à des fins commerciales.
+            </p>
 
-                <h2 style="color: #7FFF00; margin-top: 2rem;">3. Vos droits</h2>
-                <p>
-                    Conformément au Règlement Général sur la Protection des Données (RGPD), vous disposez des droits suivants :
-                </p>
-                <ul style="margin-left: 2rem;">
-                    <li><strong>Droit d'accès :</strong> Vous pouvez demander une copie de vos données personnelles</li>
-                    <li><strong>Droit de rectification :</strong> Vous pouvez corriger vos données inexactes</li>
-                    <li><strong>Droit à l'effacement :</strong> Vous pouvez demander la suppression de votre compte et de vos données</li>
-                    <li><strong>Droit d'opposition :</strong> Vous pouvez vous opposer au traitement de vos données</li>
-                    <li><strong>Droit à la portabilité :</strong> Vous pouvez récupérer vos données dans un format structuré</li>
-                </ul>
+            <h2 style="color: #7FFF00; margin-top: 2rem;">3. Vos droits</h2>
+            <p>
+                Conformément au Règlement Général sur la Protection des Données (RGPD), vous disposez des droits suivants :
+            </p>
+            <ul style="margin-left: 2rem;">
+                <li><strong>Droit d'accès :</strong> Vous pouvez demander une copie de vos données personnelles</li>
+                <li><strong>Droit de rectification :</strong> Vous pouvez corriger vos données inexactes</li>
+                <li><strong>Droit à l'effacement :</strong> Vous pouvez demander la suppression de votre compte et de vos données</li>
+                <li><strong>Droit d'opposition :</strong> Vous pouvez vous opposer au traitement de vos données</li>
+                <li><strong>Droit à la portabilité :</strong> Vous pouvez récupérer vos données dans un format structuré</li>
+            </ul>
 
-                <h2 style="color: #7FFF00; margin-top: 2rem;">4. Sécurité des données</h2>
-                <p>
-                    Nous mettons en œuvre des mesures de sécurité appropriées pour protéger vos données personnelles :
-                </p>
-                <ul style="margin-left: 2rem;">
-                    <li>Chiffrement des mots de passe</li>
-                    <li>Connexion sécurisée (HTTPS)</li>
-                    <li>Accès restreint aux données</li>
-                    <li>Sauvegardes régulières</li>
-                </ul>
+            <h2 style="color: #7FFF00; margin-top: 2rem;">4. Sécurité des données</h2>
+            <p>
+                Nous mettons en œuvre des mesures de sécurité appropriées pour protéger vos données personnelles :
+            </p>
+            <ul style="margin-left: 2rem;">
+                <li>Chiffrement des mots de passe</li>
+                <li>Connexion sécurisée (HTTPS)</li>
+                <li>Accès restreint aux données</li>
+                <li>Sauvegardes régulières</li>
+            </ul>
 
-                <h2 style="color: #7FFF00; margin-top: 2rem;">5. Cookies et stockage local</h2>
-                <p>
-                    Ce jeu utilise le stockage local du navigateur (localStorage) pour sauvegarder votre progression.
-                    Aucune donnée n'est envoyée à des serveurs tiers. Vous pouvez effacer ces données à tout moment
-                    en vidant le cache de votre navigateur.
-                </p>
+            <h2 style="color: #7FFF00; margin-top: 2rem;">5. Cookies et stockage local</h2>
+            <p>
+                Ce jeu utilise le stockage local du navigateur (localStorage) pour sauvegarder votre progression.
+                Aucune donnée n'est envoyée à des serveurs tiers. Vous pouvez effacer ces données à tout moment
+                en vidant le cache de votre navigateur.
+            </p>
 
-                <h2 style="color: #7FFF00; margin-top: 2rem;">6. Durée de conservation</h2>
-                <p>
-                    Vos données sont conservées tant que votre compte est actif. En cas d'inactivité prolongée
-                    (plus de 2 ans), nous nous réservons le droit de supprimer votre compte après vous en avoir informé.
-                </p>
+            <h2 style="color: #7FFF00; margin-top: 2rem;">6. Durée de conservation</h2>
+            <p>
+                Vos données sont conservées tant que votre compte est actif. En cas d'inactivité prolongée
+                (plus de 2 ans), nous nous réservons le droit de supprimer votre compte après vous en avoir informé.
+            </p>
 
-                <h2 style="color: #7FFF00; margin-top: 2rem;">7. Contact</h2>
-                <p>
-                    Pour toute question concernant la gestion de vos données personnelles ou pour exercer vos droits,
-                    vous pouvez nous contacter à :
-                </p>
-                <p style="margin-left: 2rem;">
-                    📧 <strong>Email :</strong> rgpd@monstersweb.fr<br>
-                    📞 <strong>Téléphone :</strong> +33 1 23 45 67 89<br>
-                    🏢 <strong>Adresse :</strong> 123 Rue des Monstres, 75000 Paris, France
-                </p>
+            <h2 style="color: #7FFF00; margin-top: 2rem;">7. Contact</h2>
+            <p>
+                Pour toute question concernant la gestion de vos données personnelles ou pour exercer vos droits,
+                vous pouvez nous contacter à :
+            </p>
+            <p style="margin-left: 2rem;">
+                📧 <strong>Email :</strong> rgpd@monstersweb.fr<br>
+                📞 <strong>Téléphone :</strong> +33 1 23 45 67 89<br>
+                🏢 <strong>Adresse :</strong> 123 Rue des Monstres, 75000 Paris, France
+            </p>
 
-                <h2 style="color: #7FFF00; margin-top: 2rem;">8. Modifications</h2>
-                <p>
-                    Nous nous réservons le droit de modifier cette politique de confidentialité à tout moment.
-                    Les modifications seront publiées sur cette page avec la date de mise à jour.
-                </p>
-                <p style="margin-top: 1rem;">
-                    <strong>Dernière mise à jour :</strong> 13 novembre 2025
-                </p>
+            <h2 style="color: #7FFF00; margin-top: 2rem;">8. Modifications</h2>
+            <p>
+                Nous nous réservons le droit de modifier cette politique de confidentialité à tout moment.
+                Les modifications seront publiées sur cette page avec la date de mise à jour.
+            </p>
+            <p style="margin-top: 1rem;">
+                <strong>Dernière mise à jour :</strong> 13 novembre 2025
+            </p>
 
-                <div style="text-align: center; margin-top: 3rem;">
-                    <a th:href="@{/}" style="display: inline-block; background: #7FFF00; color: #1C1E26; padding: 1rem 2rem; border-radius: 8px; text-decoration: none; font-weight: 700;">
-                        Retour à l'accueil
-                    </a>
-                </div>
+            <div style="text-align: center; margin-top: 3rem;">
+                <a th:href="@{/}" style="display: inline-block; background: #7FFF00; color: #1C1E26; padding: 1rem 2rem; border-radius: 8px; text-decoration: none; font-weight: 700;">
+                    Retour à l'accueil
+                </a>
             </div>
         </div>
     </div>
 </div>
-<script src="/static/js/game.js"></script>
+</body>
+<script src="../../static/js/game.js"></script>
 </html>

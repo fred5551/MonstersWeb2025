@@ -1,49 +1,74 @@
+<!-- a-propos.html -->
 <!DOCTYPE html>
-<html th:replace="base :: html" lang="fr" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Monsters Web</title>
-    <link rel="stylesheet" href="../../static/css/style.css">
-    <!DOCTYPE html>
-</head>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org" th:replace="~{base :: html}">
+<head><title>Monsters Web - À propos</title></head>
+<body>
 <div th:fragment="content">
-    <div class="page active">
-        <div class="hero-section">
-            <h1>À Propos de Monsters Web</h1>
-
-            <div class="content-section" style="max-width: 800px; margin: 2rem auto; text-align: left;">
-                <h2 style="color: #7FFF00; margin-top: 2rem;">Notre Projet</h2>
-                <p style="line-height: 1.8; color: #b0b0b0;">
-                    Monsters Web est un jeu de collection et de combat de monstres développé dans le cadre d'un projet pédagogique.
-                    Notre objectif est de créer une expérience ludique et engageante tout en mettant en pratique nos compétences en développement web.
-                </p>
-
-                <h2 style="color: #7FFF00; margin-top: 2rem;">Fonctionnalités</h2>
-                <ul style="line-height: 2; color: #b0b0b0;">
-                    <li>🎮 Exploration de zones variées pour capturer des monstres</li>
-                    <li>⚔️ Système de combat stratégique au tour par tour</li>
-                    <li>📈 Progression et montée en niveau des monstres</li>
-                    <li>🎒 Gestion d'inventaire et d'équipement</li>
-                    <li>👥 Constitution et personnalisation de votre équipe</li>
-                </ul>
-
-                <h2 style="color: #7FFF00; margin-top: 2rem;">Technologies Utilisées</h2>
-                <ul style="line-height: 2; color: #b0b0b0;">
-                    <li>Spring Boot + Kotlin</li>
-                    <li>Thymeleaf</li>
-                    <li>MariaDB</li>
-                    <li>JavaScript</li>
-                    <li>HTML5 & CSS3</li>
-                </ul>
-
-                <h2 style="color: #7FFF00; margin-top: 2rem;">L'Équipe</h2>
-                <p style="line-height: 1.8; color: #b0b0b0;">
-                    Ce projet est développé par des étudiants passionnés de programmation et de jeux vidéo.
-                </p>
-            </div>
+    <div class="hero-section">
+        <h1>À Propos de Monsters Web</h1>
+        <div class="content-section" style="max-width: 800px; margin: 2rem auto; text-align: left;">
+            <h2 style="color: #7FFF00; margin-top: 2rem;">Notre Projet</h2>
+            <p style="line-height: 1.8; color: #b0b0b0;">
+                Monsters Web est un jeu de collection et de combat de monstres développé dans le cadre d'un projet pédagogique.
+            </p>
+            <h2 style="color: #7FFF00; margin-top: 2rem;">Fonctionnalités</h2>
+            <ul style="line-height: 2; color: #b0b0b0;">
+                <li>🎮 Exploration de zones variées</li>
+                <li>⚔️ Système de combat stratégique</li>
+                <li>📈 Progression et montée en niveau</li>
+            </ul>
         </div>
     </div>
 </div>
-    <script src="/static/js/game.js"></script>
+</body>
+</html>
+
+<!-- contact.html -->
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org" th:replace="~{base :: html}">
+<head><title>Monsters Web - Contact</title></head>
+<body>
+<div th:fragment="content">
+    <div class="hero-section">
+        <h1>Contactez-nous</h1>
+        <div class="auth-section" style="max-width: 600px; margin: 2rem auto;">
+            <form id="contact-form" class="auth-form active">
+                <h2>Formulaire de Contact</h2>
+                <input type="text" placeholder="Votre nom" required>
+                <input type="email" placeholder="Votre email" required>
+                <input type="text" placeholder="Sujet" required>
+                <textarea placeholder="Votre message" rows="6" required></textarea>
+                <button type="submit">Envoyer</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
+<!-- inscription.html -->
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org" th:replace="~{base :: html}">
+<head><title>Monsters Web - Inscription</title></head>
+<body>
+<div th:fragment="content">
+    <div class="hero-section">
+        <h1>Créer un Compte</h1>
+        <div class="auth-section" style="max-width: 500px; margin: 2rem auto;">
+            <form class="auth-form active">
+                <h2>Inscription</h2>
+                <input type="text" placeholder="Pseudo" required minlength="3">
+                <input type="email" placeholder="Email" required>
+                <input type="password" placeholder="Mot de passe" required minlength="6">
+                <input type="password" placeholder="Confirmer le mot de passe" required>
+                <label class="checkbox-label">
+                    <input type="checkbox" required>
+                    J'accepte la <a th:href="@{/rgpd}">politique de confidentialité</a>
+                </label>
+                <button type="submit">S'inscrire</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
 </html>

@@ -1,42 +1,29 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Monsters Web</title>
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-          rel="stylesheet"
-          integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
-          crossorigin="anonymous">
-
     <!-- Custom CSS -->
-    <link rel="stylesheet" th:href="@{static/css/styles.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-<div class="min-vh-100">
-    <!-- Header -->
-    <header th:replace="fragments :: header"></header>
+<!-- Header -->
+<div th:replace="~{fragments :: header}"></div>
 
-    <!-- Main Content -->
-    <main>
-        <div class="container" th:replace="::content">
-            <!-- Le contenu de chaque page sera inséré ici -->
-        </div>
-    </main>
-</div>
+<!-- Main Content -->
+<main>
+    <div th:replace="~{::content}">
+        <!-- Le contenu de chaque page sera inséré ici -->
+    </div>
+</main>
 
 <!-- Footer -->
-<div th:replace="fragments :: footer"></div>
+<div th:replace="~{fragments :: footer}"></div>
 
 <!-- RGPD Modal -->
-<div th:replace="fragments :: rgpd-modal"></div>
-
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-        crossorigin="anonymous"></script>
+<div th:replace="~{fragments :: rgpd-modal}"></div>
 
 <!-- Custom JavaScript -->
 <script th:src="@{/js/game.js}"></script>

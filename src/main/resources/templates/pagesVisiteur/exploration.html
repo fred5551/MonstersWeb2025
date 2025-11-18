@@ -1,59 +1,74 @@
 <!DOCTYPE html>
-<html th:replace="base :: html" lang="fr" xmlns:th="http://www.thymeleaf.org">
+<html lang="fr" xmlns:th="http://www.thymeleaf.org" th:replace="~{base :: html}">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Monsters Web</title>
-    <link rel="stylesheet" href="../../static/css/style.css">
-    <!DOCTYPE html>
+    <title>Monsters Web - Exploration</title>
 </head>
+<body>
+<link rel="stylesheet" href="../../static/css/style.css">
+<header id="header">
+    <div class="header-content">
+        <div class="logo">🐲 Monsters Web</div>
+        <nav id="main-nav">
+            <a class="nav-btn" href=#>Accueil</a>
+            <a class="nav-btn" href="pagesVisiteur/exploration.html">Exploration</a>
+            <a class="nav-btn" href="pagesVisiteur/mon-equipe.html">Mon Équipe</a>
+            <a class="nav-btn" href="pagesVisiteur/inventaire.html">Inventaire</a>
+            <a class="nav-btn" href="pagesVisiteur/combat.html">Combat</a>
+        </nav>
+        <div class="user-info">
+            <span id="user-name">Joueur</span>
+            <button id="logout-btn">Déconnexion</button>
+        </div>
+    </div>
+</header>
 <div th:fragment="content">
-    <div class="page active" id="exploration-page">
-        <h1>Exploration</h1>
-        <div class="exploration-container">
-            <!-- Zones d'exploration -->
-            <div class="zones-grid">
-                <div class="zone-card" data-zone="forest">
-                    <h3>🌲 Forêt Mystique</h3>
-                    <p>Niveau recommandé: 1-5</p>
-                    <button class="explore-btn">Explorer</button>
-                </div>
-                <div class="zone-card" data-zone="mountain">
-                    <h3>⛰️ Montagne Glacée</h3>
-                    <p>Niveau recommandé: 5-10</p>
-                    <button class="explore-btn">Explorer</button>
-                </div>
-                <div class="zone-card" data-zone="volcano">
-                    <h3>🌋 Volcan Ardent</h3>
-                    <p>Niveau recommandé: 10-15</p>
-                    <button class="explore-btn">Explorer</button>
-                </div>
-                <div class="zone-card" data-zone="ocean">
-                    <h3>🌊 Océan Profond</h3>
-                    <p>Niveau recommandé: 15-20</p>
-                    <button class="explore-btn">Explorer</button>
-                </div>
-            </div>
+    <div class="exploration-container">
+        <h1 style="text-align: center; color: #7FFF00; margin-bottom: 2rem;">Exploration</h1>
 
-            <!-- Section de rencontre avec un monstre sauvage -->
-            <div id="encounter-section" class="encounter hidden">
-                <h2>Rencontre sauvage !</h2>
-                <div class="wild-monster" id="wild-monster">
-                    <div class="monster-sprite">👾</div>
-                    <h3 id="wild-monster-name">Monstre Sauvage</h3>
-                    <div class="monster-stats">
-                        <p>PV: <span id="wild-hp">100</span></p>
-                        <p>Attaque: <span id="wild-attack">20</span></p>
-                        <p>Défense: <span id="wild-defense">15</span></p>
-                    </div>
-                    <div class="encounter-actions">
-                        <button id="capture-btn">Capturer</button>
-                        <button id="flee-btn">Fuir</button>
-                    </div>
+        <!-- Zones d'exploration -->
+        <div class="zones-grid">
+            <div class="zone-card" data-zone="forest">
+                <h3>🌲 Forêt Mystique</h3>
+                <p>Niveau recommandé: 1-5</p>
+                <button class="explore-btn">Explorer</button>
+            </div>
+            <div class="zone-card" data-zone="mountain">
+                <h3>⛰️ Montagne Glacée</h3>
+                <p>Niveau recommandé: 5-10</p>
+                <button class="explore-btn">Explorer</button>
+            </div>
+            <div class="zone-card" data-zone="volcano">
+                <h3>🌋 Volcan Ardent</h3>
+                <p>Niveau recommandé: 10-15</p>
+                <button class="explore-btn">Explorer</button>
+            </div>
+            <div class="zone-card" data-zone="ocean">
+                <h3>🌊 Océan Profond</h3>
+                <p>Niveau recommandé: 15-20</p>
+                <button class="explore-btn">Explorer</button>
+            </div>
+        </div>
+
+        <!-- Section de rencontre avec un monstre sauvage -->
+        <div id="encounter-section" class="encounter hidden">
+            <h2>Rencontre sauvage !</h2>
+            <div class="wild-monster" id="wild-monster">
+                <div class="monster-sprite">👾</div>
+                <h3 id="wild-monster-name">Monstre Sauvage</h3>
+                <div class="monster-stats">
+                    <p>PV: <span id="wild-hp">100</span></p>
+                    <p>Attaque: <span id="wild-attack">20</span></p>
+                    <p>Défense: <span id="wild-defense">15</span></p>
+                </div>
+                <div class="encounter-actions">
+                    <button id="capture-btn">Capturer</button>
+                    <button id="flee-btn">Fuir</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<script src="/static/js/game.js"></script>
+</body>
+<script src="../../static/js/game.js"></script>
 </html>

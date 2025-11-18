@@ -1,95 +1,102 @@
+<!-- a-propos.html -->
 <!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Monsters Web</title>
-    <link rel="stylesheet" href="../static/css/style.css">
-    <!DOCTYPE html>
-</head>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org" th:replace="~{base :: html}">
+<head><title>Monsters Web - À propos</title></head>
 <body>
-<div id="app">
-    <!-- Header -->
-    <header id="header">
-        <div class="header-content">
-            <div class="logo">🐲 Monsters Web</div>
-            <nav id="main-nav">
-                <button class="nav-btn" data-page="home">Accueil</button>
-                <a class="nav-btn" href="pagesVisiteur/exploration.html">Exploration</a>
-                <a class="nav-btn" href="pagesVisiteur/mon-equipe.html">Mon Équipe</a>
-                <a class="nav-btn" href="pagesVisiteur/inventaire.html">Inventaire</a>
-                <a class="nav-btn" href="pagesVisiteur/combat.html">Combat</a>
-            </nav>
-            <div class="user-info">
-                <span id="user-name">Joueur</span>
-                <button id="logout-btn">Déconnexion</button>
-            </div>
+<link rel="stylesheet" href="../static/css/style.css">
+
+<header id="header">
+    <div class="header-content">
+        <div class="logo">🐲 Monsters Web</div>
+        <nav id="main-nav">
+            <a class="nav-btn" href=#>Accueil</a>
+            <a class="nav-btn" href="pagesVisiteur/exploration.html">Exploration</a>
+            <a class="nav-btn" href="pagesVisiteur/mon-equipe.html">Mon Équipe</a>
+            <a class="nav-btn" href="pagesVisiteur/inventaire.html">Inventaire</a>
+            <a class="nav-btn" href="pagesVisiteur/combat.html">Combat</a>
+        </nav>
+        <div class="user-info">
+            <span id="user-name">Joueur</span>
+            <button id="logout-btn">Déconnexion</button>
         </div>
-    </header>
+    </div>
+</header>
 
-    <!-- Main Content -->
-    <html id="main-content" lang="fr">
-        <!-- HOME PAGE -->
-        <div id="home-page" class="page active">
-            <div class="hero-section">
-                <h1>Bienvenue dans Monsters Web</h1>
-                <p class="hero-subtitle">Collectionnez, entraînez et affrontez des monstres légendaires</p>
-
-                <div class="auth-section" id="auth-section">
-                    <div class="auth-tabs">
-                        <button class="auth-tab active" data-tab="login">Connexion</button>
-                        <button class="auth-tab" data-tab="register">Inscription</button>
-                    </div>
-
-                    <div id="login-form" class="auth-form active">
-                        <h2>Connexion</h2>
-                        <input type="text" id="login-username" placeholder="Pseudo" required>
-                        <input type="password" id="login-password" placeholder="Mot de passe" required>
-                        <button id="login-submit">Se connecter</button>
-                    </div>
-
-                    <div id="register-form" class="auth-form">
-                        <h2>Inscription</h2>
-                        <input type="text" id="register-username" placeholder="Pseudo" required>
-                        <input type="email" id="register-email" placeholder="Email" required>
-                        <input type="password" id="register-password" placeholder="Mot de passe" required>
-                        <label class="checkbox-label">
-                            <input type="checkbox" id="rgpd-accept" required>
-                            J'accepte la <a href="#" id="rgpd-link">politique de confidentialité</a>
-                        </label>
-                        <button id="register-submit">S'inscrire</button>
-                    </div>
-                </div>
-
-                <div id="dashboard-section" class="dashboard hidden">
-                    <h2>Tableau de Bord</h2>
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <h3>Monstres capturés</h3>
-                            <p class="stat-value" id="monsters-count">0</p>
-                        </div>
-                        <div class="stat-card">
-                            <h3>Combats gagnés</h3>
-                            <p class="stat-value" id="wins-count">0</p>
-                        </div>
-                        <div class="stat-card">
-                            <h3>Niveau</h3>
-                            <p class="stat-value" id="player-level">1</p>
-                        </div>
-                        <div class="stat-card">
-                            <h3>Monster $</h3>
-                            <p class="stat-value" id="gold-count">100</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<div th:fragment="content">
+    <div class="hero-section">
+        <h1>À Propos de Monsters Web</h1>
+        <div class="content-section" style="max-width: 800px; margin: 2rem auto; text-align: left;">
+            <h2 style="color: #7FFF00; margin-top: 2rem;">Notre Projet</h2>
+            <p style="line-height: 1.8; color: #b0b0b0;">
+                Monsters Web est un jeu de collection et de combat de monstres développé dans le cadre d'un projet pédagogique.
+            </p>
+            <h2 style="color: #7FFF00; margin-top: 2rem;">Fonctionnalités</h2>
+            <ul style="line-height: 2; color: #b0b0b0;">
+                <li>🎮 Exploration de zones variées</li>
+                <li>⚔️ Système de combat stratégique</li>
+                <li>📈 Progression et montée en niveau</li>
+            </ul>
         </div>
-
-<script src="../static/js/game.js"></script>
-        <!-- Footer -->
-        <footer>
-            <p>&copy; 2025 Monsters Web - Projet pédagogique</p>
-            <a href="#" id="footer-rgpd-link">Politique de confidentialité</a>
-        </footer>
-</html>
+    </div>
 </div>
+</body>
+</html>
+
+<!-- contact.html -->
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org" th:replace="~{base :: html}">
+<head><title>Monsters Web - Contact</title></head>
+<body>
+<div th:fragment="content">
+    <div class="hero-section">
+        <h1>Contactez-nous</h1>
+        <div class="auth-section" style="max-width: 600px; margin: 2rem auto;">
+            <form id="contact-form" class="auth-form active">
+                <h2>Formulaire de Contact</h2>
+                <input type="text" placeholder="Votre nom" required>
+                <input type="email" placeholder="Votre email" required>
+                <input type="text" placeholder="Sujet" required>
+                <textarea placeholder="Votre message" rows="6" required></textarea>
+                <button type="submit">Envoyer</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
+<!-- inscription.html -->
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org" th:replace="~{base :: html}">
+<head><title>Monsters Web - Inscription</title></head>
+<body>
+<div th:fragment="content">
+    <div class="hero-section">
+        <h1>Créer un Compte</h1>
+        <div class="auth-section" style="max-width: 500px; margin: 2rem auto;">
+            <form class="auth-form active">
+                <h2>Inscription</h2>
+                <input type="text" placeholder="Pseudo" required minlength="3">
+                <input type="email" placeholder="Email" required>
+                <input type="password" placeholder="Mot de passe" required minlength="6">
+                <input type="password" placeholder="Confirmer le mot de passe" required>
+                <label class="checkbox-label">
+                    <input type="checkbox" required>
+                    J'accepte la <a th:href="@{/rgpd}">politique de confidentialité</a>
+                </label>
+                <button type="submit">S'inscrire</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer>
+    <p>&copy; 2025 Monsters Web - Projet pédagogique</p>
+    <a href="#" id="footer-rgpd-link">Politique de confidentialité</a>
+</footer>
+
+</body>
+<script src="../static/js/game.js"></script>
+
+</html>

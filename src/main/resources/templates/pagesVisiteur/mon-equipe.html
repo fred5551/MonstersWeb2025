@@ -1,37 +1,34 @@
 <!DOCTYPE html>
-<html th:replace="base :: html" lang="fr" xmlns:th="http://www.thymeleaf.org">
+<html lang="fr" xmlns:th="http://www.thymeleaf.org" th:replace="~{base :: html}">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Monsters Web</title>
-    <link rel="stylesheet" href="../../static/css/style.css">
-    <!DOCTYPE html>
+    <title>Monsters Web - Mon Équipe</title>
 </head>
+<body>
 <div th:fragment="content">
-    <div class="page active" id="team-page">
-        <h1>Mon Équipe</h1>
-        <div class="team-container">
-            <!-- Équipe active -->
-            <div class="team-header">
-                <h2>Équipe Active</h2>
-                <p>Maximum 6 monstres</p>
-            </div>
-            <div id="active-team" class="monsters-grid">
-                <!-- Les monstres actifs seront ajoutés ici par JavaScript -->
-                <p style="grid-column:1/-1; text-align:center; color:#b0b0b0;">Aucun monstre dans l'équipe active</p>
-            </div>
+    <div class="team-container">
+        <h1 style="text-align: center; color: #7FFF00; margin-bottom: 2rem;">Mon Équipe</h1>
 
-            <!-- Monstres en réserve -->
-            <div class="team-header">
-                <h2>Monstres en Réserve</h2>
-            </div>
-            <div id="reserve-monsters" class="monsters-grid">
-                <!-- Les monstres en réserve seront ajoutés ici par JavaScript -->
-                <p style="grid-column:1/-1; text-align:center; color:#b0b0b0;">Aucun monstre en réserve</p>
-            </div>
+        <!-- Équipe active -->
+        <div class="team-header">
+            <h2>Équipe Active</h2>
+            <p>Maximum 6 monstres</p>
+        </div>
+        <div id="active-team" class="monsters-grid">
+            <!-- Les monstres actifs seront ajoutés ici par JavaScript -->
+            <p style="grid-column:1/-1; text-align:center; color:#b0b0b0;">Aucun monstre dans l'équipe active</p>
+        </div>
+
+        <!-- Monstres en réserve -->
+        <div class="team-header">
+            <h2>Monstres en Réserve</h2>
+        </div>
+        <div id="reserve-monsters" class="monsters-grid">
+            <!-- Les monstres en réserve seront ajoutés ici par JavaScript -->
+            <p style="grid-column:1/-1; text-align:center; color:#b0b0b0;">Aucun monstre en réserve</p>
         </div>
     </div>
 </div>
-<script src="/static/js/game.js"></script>
+</body>
+<script src="../../static/js/game.js"></script>
 </html>
-
