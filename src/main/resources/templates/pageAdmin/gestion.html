@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html th:replace="base :: html" lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Administration - Monsters Web</title>
+</head>
+<body>
+<div th:fragment="content">
+    <main class="py-5">
+        <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 2rem;">
+            <h1 class="mb-5 text-center" style="color: #7FFF00; font-size: 2.5rem;">🔧 Administration Monsters Web</h1>
+
+            <div class="admin-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem;">
+
+                <!-- Card Espèces -->
+                <div class="admin-card" style="background: linear-gradient(145deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%); border: 2px solid rgba(127, 255, 0, 0.3); border-radius: 16px; padding: 2rem; text-align: center; transition: all 0.3s ease;">
+                    <div style="font-size: 4rem; margin-bottom: 1rem;">🐉</div>
+                    <h3 style="color: #7FFF00; margin-bottom: 1rem;">Espèces de Monstres</h3>
+                    <p style="color: #b0b0b0; margin-bottom: 1.5rem;">Gérer les espèces de monstres disponibles</p>
+                    <a th:href="@{/monsters-web/admin/especes}"
+                       style="display: inline-block; background: #7FFF00; color: #1C1E26; padding: 0.8rem 2rem; border-radius: 8px; text-decoration: none; font-weight: 600; transition: all 0.3s ease;">
+                        Gérer les espèces
+                    </a>
+                </div>
+
+                <!-- Card Individus -->
+                <div class="admin-card" style="background: linear-gradient(145deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%); border: 2px solid rgba(127, 255, 0, 0.3); border-radius: 16px; padding: 2rem; text-align: center; transition: all 0.3s ease;">
+                    <div style="font-size: 4rem; margin-bottom: 1rem;">👾</div>
+                    <h3 style="color: #7FFF00; margin-bottom: 1rem;">Individus Monstres</h3>
+                    <p style="color: #b0b0b0; margin-bottom: 1.5rem;">Gérer les monstres individuels</p>
+                    <a th:href="@{/monsters-web/admin/individus}"
+                       style="display: inline-block; background: #7FFF00; color: #1C1E26; padding: 0.8rem 2rem; border-radius: 8px; text-decoration: none; font-weight: 600; transition: all 0.3s ease;">
+                        Gérer les individus
+                    </a>
+                </div>
+
+                <!-- Card Utilisateurs -->
+                <div class="admin-card" style="background: linear-gradient(145deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%); border: 2px solid rgba(127, 255, 0, 0.3); border-radius: 16px; padding: 2rem; text-align: center; transition: all 0.3s ease;">
+                    <div style="font-size: 4rem; margin-bottom: 1rem;">👥</div>
+                    <h3 style="color: #7FFF00; margin-bottom: 1rem;">Utilisateurs</h3>
+                    <p style="color: #b0b0b0; margin-bottom: 1.5rem;">Gérer les comptes utilisateurs</p>
+                    <a th:href="@{/monsters-web/admin/utilisateurs}"
+                       style="display: inline-block; background: #7FFF00; color: #1C1E26; padding: 0.8rem 2rem; border-radius: 8px; text-decoration: none; font-weight: 600; transition: all 0.3s ease;">
+                        Gérer les utilisateurs
+                    </a>
+                </div>
+
+                <!-- Card Équipes -->
+                <div class="admin-card" style="background: linear-gradient(145deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%); border: 2px solid rgba(127, 255, 0, 0.3); border-radius: 16px; padding: 2rem; text-align: center; transition: all 0.3s ease;">
+                    <div style="font-size: 4rem; margin-bottom: 1rem;">⚔️</div>
+                    <h3 style="color: #7FFF00; margin-bottom: 1rem;">Équipes</h3>
+                    <p style="color: #b0b0b0; margin-bottom: 1.5rem;">Gérer les équipes de combat</p>
+                    <a th:href="@{/monsters-web/admin/equipes}"
+                       style="display: inline-block; background: #7FFF00; color: #1C1E26; padding: 0.8rem 2rem; border-radius: 8px; text-decoration: none; font-weight: 600; transition: all 0.3s ease;">
+                        Gérer les équipes
+                    </a>
+                </div>
+
+                <!-- Card Combats -->
+                <div class="admin-card" style="background: linear-gradient(145deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%); border: 2px solid rgba(127, 255, 0, 0.3); border-radius: 16px; padding: 2rem; text-align: center; transition: all 0.3s ease;">
+                    <div style="font-size: 4rem; margin-bottom: 1rem;">🥊</div>
+                    <h3 style="color: #7FFF00; margin-bottom: 1rem;">Combats</h3>
+                    <p style="color: #b0b0b0; margin-bottom: 1.5rem;">Historique des combats</p>
+                    <a th:href="@{/monsters-web/admin/combats}"
+                       style="display: inline-block; background: #7FFF00; color: #1C1E26; padding: 0.8rem 2rem; border-radius: 8px; text-decoration: none; font-weight: 600; transition: all 0.3s ease;">
+                        Voir les combats
+                    </a>
+                </div>
+
+                <!-- Card Commentaires -->
+                <div class="admin-card" style="background: linear-gradient(145deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%); border: 2px solid rgba(127, 255, 0, 0.3); border-radius: 16px; padding: 2rem; text-align: center; transition: all 0.3s ease;">
+                    <div style="font-size: 4rem; margin-bottom: 1rem;">💬</div>
+                    <h3 style="color: #7FFF00; margin-bottom: 1rem;">Commentaires</h3>
+                    <p style="color: #b0b0b0; margin-bottom: 1.5rem;">Modération des commentaires</p>
+                    <a th:href="@{/monsters-web/admin/commentaires}"
+                       style="display: inline-block; background: #7FFF00; color: #1C1E26; padding: 0.8rem 2rem; border-radius: 8px; text-decoration: none; font-weight: 600; transition: all 0.3s ease;">
+                        Gérer les commentaires
+                    </a>
+                </div>
+
+            </div>
+
+            <div style="text-align: center; margin-top: 3rem;">
+                <a th:href="@{/}"
+                   style="display: inline-block; background: rgba(255, 255, 255, 0.1); color: #7FFF00; padding: 0.8rem 2rem; border: 2px solid rgba(127, 255, 0, 0.3); border-radius: 8px; text-decoration: none; font-weight: 600; transition: all 0.3s ease;">
+                    ← Retour au site
+                </a>
+            </div>
+        </div>
+    </main>
+</div>
+</body>
+</html>

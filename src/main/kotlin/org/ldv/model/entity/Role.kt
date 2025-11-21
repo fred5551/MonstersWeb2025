@@ -4,7 +4,13 @@ import jakarta.persistence.*
 class Role(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long?=null,
+    @Column(nullable = false)
+    var id: Long? = null,
 
-    var nom: String
+    @Column(nullable = false, unique = true)
+    var nom: String,
+
+    // Relation OneToMany avec Utilisateur
+    @OneToMany(mappedBy = "role", cascade = [CascadeType.ALL])
+    var utilisateurs: MutableList<Utilisateur> = mutableListOf()
 )

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html th:replace="base :: html" lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestion des Espèces - Admin</title>
+</head>
+<body>
+<div th:fragment="content">
+    <main class="py-5">
+        <div class="container" style="max-width: 1400px; margin: 0 auto; padding: 2rem;">
+            <h1 class="mb-5 text-center" style="color: #7FFF00;">Administration des Espèces de Monstres</h1>
+
+            <div class="d-flex justify-content-between align-items-center mb-4" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <h2 style="color: #7FFF00; margin: 0;">Espèces</h2>
+                <a th:href="@{/monsters-web/admin/especes/create}"
+                   style="background: #7FFF00; color: #1C1E26; padding: 0.8rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 700;">
+                    + Nouvelle espèce
+                </a>
+            </div>
+
+            <div th:if="${success}" class="alert alert-success"
+                 style="background: rgba(127, 255, 0, 0.2); border: 2px solid #7FFF00; padding: 1rem; border-radius: 8px; margin-bottom: 2rem; color: #7FFF00;"
+                 th:text="${success}">
+            </div>
+
+            <table class="table table-striped"
+                   style="width: 100%; background: rgba(255, 255, 255, 0.05); border-radius: 12px; overflow: hidden;">
+                <thead style="background: rgba(127, 255, 0, 0.1);">
+                <tr>
+                    <th style="padding: 1rem; color: #7FFF00; border-bottom: 2px solid rgba(127, 255, 0, 0.3);">ID</th>
+                    <th style="padding: 1rem; color: #7FFF00; border-bottom: 2px solid rgba(127, 255, 0, 0.3);">Nom</th>
+                    <th style="padding: 1rem; color: #7FFF00; border-bottom: 2px solid rgba(127, 255, 0, 0.3);">Type</th>
+                    <th style="padding: 1rem; color: #7FFF00; border-bottom: 2px solid rgba(127, 255, 0, 0.3);">PV Base</th>
+                    <th style="padding: 1rem; color: #7FFF00; border-bottom: 2px solid rgba(127, 255, 0, 0.3);">ATK Base</th>
+                    <th style="padding: 1rem; color: #7FFF00; border-bottom: 2px solid rgba(127, 255, 0, 0.3);">DEF Base</th>
+                    <th style="padding: 1rem; color: #7FFF00; border-bottom: 2px solid rgba(127, 255, 0, 0.3);">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="espece : ${especes}" style="border-bottom: 1px solid rgba(127, 255, 0, 0.1);">
+                    <td style="padding: 1rem; color: #b0b0b0;" th:text="${espece.id}"></td>
+                    <td style="padding: 1rem; color: #fff; font-weight: 600;" th:text="${espece.nom}"></td>
+                    <td style="padding: 1rem; color: #b0b0b0;" th:text="${espece.type}"></td>
+                    <td style="padding: 1rem; color: #b0b0b0;" th:text="${espece.pvBase}"></td>
+                    <td style="padding: 1rem; color: #b0b0b0;" th:text="${espece.attaqueBase}"></td>
+                    <td style="padding: 1rem; color: #b0b0b0;" th:text="${espece.defenseBase}"></td>
+                    <td style="padding: 1rem;">
+                        <a th:href="@{'/monsters-web/admin/especes/' + ${espece.id}}"
+                           style="background: rgba(127, 255, 0, 0.2); color: #7FFF00; padding: 0.4rem 0.8rem; border-radius: 6px; text-decoration: none; margin-right: 0.5rem; display: inline-block; font-size: 0.9rem;">
+                            Afficher
+                        </a>
+                        <a th:href="@{'/monsters-web/admin/especes/edit/' + ${espece.id}}"
+                           style="background: rgba(255, 193, 7, 0.2); color: #ffc107; padding: 0.4rem 0.8rem; border-radius: 6px; text-decoration: none; margin-right: 0.5rem; display: inline-block; font-size: 0.9rem;">
+                            Modifier
+                        </a>
+                        <a th:href="@{'/monsters-web/admin/especes/delete/' + ${espece.id}}"
+                           onclick="return confirm('Supprimer cette espèce ?');"
+                           style="background: rgba(220, 53, 69, 0.2); color: #dc3545; padding: 0.4rem 0.8rem; border-radius: 6px; text-decoration: none; display: inline-block; font-size: 0.9rem;">
+                            Supprimer
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div style="text-align: center; margin-top: 2rem;">
+                <a th:href="@{/monsters-web/admin}"
+                   style="background: rgba(255, 255, 255, 0.1); color: #7FFF00; padding: 0.8rem 2rem; border: 2px solid rgba(127, 255, 0, 0.3); border-radius: 8px; text-decoration: none; font-weight: 600;">
+                    ← Retour au tableau de bord
+                </a>
+            </div>
+        </div>
+    </main>
+</div>
+</body>
+</html>
