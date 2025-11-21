@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html th:replace="base :: html" lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Détails Espèce - Admin</title>
+</head>
+<body>
+<div th:fragment="content">
+    <main class="py-5">
+        <div class="container" style="max-width: 900px; margin: 0 auto; padding: 2rem;">
+            <h1 class="mb-5 text-center" style="color: #7FFF00;">Détails de l'Espèce</h1>
+
+            <div style="background: rgba(255, 255, 255, 0.05); padding: 2rem; border-radius: 16px; border: 2px solid rgba(127, 255, 0, 0.3);">
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="display: block; color: #7FFF00; margin-bottom: 0.5rem; font-weight: 600;">ID</label>
+                    <p style="color: white; font-size: 1.1rem;" th:text="${espece.id}"></p>
+                </div>
+
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="display: block; color: #7FFF00; margin-bottom: 0.5rem; font-weight: 600;">Nom</label>
+                    <p style="color: white; font-size: 1.1rem;" th:text="${espece.nom}"></p>
+                </div>
+
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="display: block; color: #7FFF00; margin-bottom: 0.5rem; font-weight: 600;">Type</label>
+                    <p style="color: white; font-size: 1.1rem;" th:text="${espece.type}"></p>
+                </div>
+
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="display: block; color: #7FFF00; margin-bottom: 0.5rem; font-weight: 600;">Description</label>
+                    <p style="color: white; font-size: 1.1rem; line-height: 1.6;" th:text="${espece.description}"></p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem;">
+                    <div>
+                        <label style="display: block; color: #7FFF00; margin-bottom: 0.5rem; font-weight: 600;">PV Base</label>
+                        <p style="color: white; font-size: 1.1rem;" th:text="${espece.pvBase}"></p>
+                    </div>
+                    <div>
+                        <label style="display: block; color: #7FFF00; margin-bottom: 0.5rem; font-weight: 600;">Attaque Base</label>
+                        <p style="color: white; font-size: 1.1rem;" th:text="${espece.attaqueBase}"></p>
+                    </div>
+                    <div>
+                        <label style="display: block; color: #7FFF00; margin-bottom: 0.5rem; font-weight: 600;">Défense Base</label>
+                        <p style="color: white; font-size: 1.1rem;" th:text="${espece.defenseBase}"></p>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 1rem; justify-content: center;">
+                    <a th:href="@{'/monsters-web/admin/especes/edit/' + ${espece.id}}"
+                       style="background: #ffc107; color: #1C1E26; padding: 0.8rem 2rem; border-radius: 8px; text-decoration: none; font-weight: 700;">
+                        Modifier
+                    </a>
+                    <a th:href="@{/monsters-web/admin/especes}"
+                       style="background: rgba(255, 255, 255, 0.1); color: #7FFF00; padding: 0.8rem 2rem; border: 2px solid rgba(127, 255, 0, 0.3); border-radius: 8px; text-decoration: none; font-weight: 600;">
+                        Retour à la liste
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+</body>
+</html>

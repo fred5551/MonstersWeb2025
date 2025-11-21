@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html th:replace="base :: html" lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Modifier une Espèce - Admin</title>
+</head>
+<body>
+<div th:fragment="content">
+    <main class="py-5">
+        <div class="container" style="max-width: 800px; margin: 0 auto; padding: 2rem;">
+            <h1 class="mb-5 text-center" style="color: #7FFF00;">Modifier l'Espèce</h1>
+
+            <form th:action="@{'/monsters-web/admin/especes/update/' + ${espece.id}}" method="post"
+                  style="background: rgba(255, 255, 255, 0.05); padding: 2rem; border-radius: 16px; border: 2px solid rgba(127, 255, 0, 0.3);">
+
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label for="nom" style="display: block; color: #7FFF00; margin-bottom: 0.5rem; font-weight: 600;">Nom de l'espèce</label>
+                    <input type="text" id="nom" name="nom" th:value="${espece.nom}" required
+                           style="width: 100%; padding: 0.8rem; background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(127, 255, 0, 0.3); border-radius: 8px; color: white; font-size: 1rem;">
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label for="type" style="display: block; color: #7FFF00; margin-bottom: 0.5rem; font-weight: 600;">Type</label>
+                    <select id="type" name="type" required
+                            style="width: 100%; padding: 0.8rem; background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(127, 255, 0, 0.3); border-radius: 8px; color: white; font-size: 1rem;">
+                        <option value="">-- Sélectionner --</option>
+                        <option value="Feu" th:selected="${espece.type == 'Feu'}">Feu</option>
+                        <option value="Eau" th:selected="${espece.type == 'Eau'}">Eau</option>
+                        <option value="Terre" th:selected="${espece.type == 'Terre'}">Terre</option>
+                        <option value="Électrique" th:selected="${espece.type == 'Électrique'}">Électrique</option>
+                        <option value="Glace" th:selected="${espece.type == 'Glace'}">Glace</option>
+                        <option value="Ténèbres" th:selected="${espece.type == 'Ténèbres'}">Ténèbres</option>
+                        <option value="Plante" th:selected="${espece.type == 'Plante'}">Plante</option>
+                        <option value="Roche" th:selected="${espece.type == 'Roche'}">Roche</option>
+                        <option value="Vol" th:selected="${espece.type == 'Vol'}">Vol</option>
+                        <option value="Poison" th:selected="${espece.type == 'Poison'}">Poison</option>
+                    </select>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label for="description" style="display: block; color: #7FFF00; margin-bottom: 0.5rem; font-weight: 600;">Description</label>
+                    <textarea id="description" name="description" rows="4" required
+                              style="width: 100%; padding: 0.8rem; background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(127, 255, 0, 0.3); border-radius: 8px; color: white; font-size: 1rem; resize: vertical;" th:text="${espece.description}"></textarea>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem;">
+                    <div class="form-group">
+                        <label for="pvBase" style="display: block; color: #7FFF00; margin-bottom: 0.5rem; font-weight: 600;">PV Base</label>
+                        <input type="number" id="pvBase" name="pvBase" min="1" th:value="${espece.pvBase}" required
+                               style="width: 100%; padding: 0.8rem; background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(127, 255, 0, 0.3); border-radius: 8px; color: white; font-size: 1rem;">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="attaqueBase" style="display: block; color: #7FFF00; margin-bottom: 0.5rem; font-weight: 600;">Attaque Base</label>
+                        <input type="number" id="attaqueBase" name="attaqueBase" min="1" th:value="${espece.attaqueBase}" required
+                               style="width: 100%; padding: 0.8rem; background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(127, 255, 0, 0.3); border-radius: 8px; color: white; font-size: 1rem;">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="defenseBase" style="display: block; color: #7FFF00; margin-bottom: 0.5rem; font-weight: 600;">Défense Base</label>
+                        <input type="number" id="defenseBase" name="defenseBase" min="1" th:value="${espece.defenseBase}" required
+                               style="width: 100%; padding: 0.8rem; background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(127, 255, 0, 0.3); border-radius: 8px; color: white; font-size: 1rem;">
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 1rem; justify-content: center;">
+                    <button type="submit"
+                            style="background: #7FFF00; color: #1C1E26; padding: 0.8rem 2rem; border: none; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 1rem;">
+                        Enregistrer les modifications
+                    </button>
+                    <a th:href="@{/monsters-web/admin/especes}"
+                       style="background: rgba(255, 255, 255, 0.1); color: #7FFF00; padding: 0.8rem 2rem; border: 2px solid rgba(127, 255, 0, 0.3); border-radius: 8px; text-decoration: none; font-weight: 600; display: inline-block;">
+                        Annuler
+                    </a>
+                </div>
+            </form>
+        </div>
+    </main>
+</div>
+</body>
+</html>
