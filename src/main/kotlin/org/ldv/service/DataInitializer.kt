@@ -16,7 +16,7 @@ class DataInitializer(
     val equipeDAO: EquipeDAO,
     val combatDAO: CombatDAO,
     val commentaireDAO: CommentaireDAO,
-    val passwordEncoder: PasswordEncoder
+    val passwordEncoder: PasswordEncoder // Injection de l'encoder
 ): CommandLineRunner {
 
     override fun run(vararg args: String?) {
@@ -30,35 +30,43 @@ class DataInitializer(
         println("🚀 Initialisation des données...")
 
         // === ROLES ===
+        println("📝 Création des rôles...")
         val roleAdmin = Role(nom = "ADMIN")
         val roleClient = Role(nom = "CLIENT")
         roleDAO.saveAll(listOf(roleAdmin, roleClient))
+        println("✅ Rôles créés : ADMIN, CLIENT")
 
         // === UTILISATEURS ===
+        println("👥 Création des utilisateurs...")
         val admin = Utilisateur(
-            pseudo = "Super",
+            pseudo = "SuperAdmin",
             email = "admin@admin.com",
-            password = passwordEncoder.encode("admin123"),
+            password = passwordEncoder.encode("admin123"), // Mot de passe hashé
             role = roleAdmin
         )
 
         val client = Utilisateur(
             pseudo = "Jean",
             email = "client@client.com",
-            password = passwordEncoder.encode("client123"),
+            password = passwordEncoder.encode("client123"), // Mot de passe hashé
             role = roleClient
         )
 
         val marie = Utilisateur(
             pseudo = "Marie",
             email = "marie@client.com",
-            password = passwordEncoder.encode("marie123"),
+            password = passwordEncoder.encode("marie123"), // Mot de passe hashé
             role = roleClient
         )
 
         utilisateurDAO.saveAll(listOf(admin, client, marie))
+        println("✅ Utilisateurs créés :")
+        println("   - Admin : admin@admin.com / admin123")
+        println("   - Client : client@client.com / client123")
+        println("   - Marie : marie@client.com / marie123")
 
         // === ESPECES DE MONSTRES ===
+        println("🐉 Création des espèces de monstres...")
         val dracoflame = EspeceMonstre(
             nom = "Dracoflame",
             type = "Feu",
@@ -105,8 +113,10 @@ class DataInitializer(
         )
 
         especeMonstreDAO.saveAll(listOf(dracoflame, aquashark, terravolt, voltflash, frostbite))
+        println("✅ ${especeMonstreDAO.count()} espèces créées")
 
         // === INDIVIDUS MONSTRES ===
+        println("👾 Création des individus monstres...")
         val flamby = IndividuMonstre(
             nom = "Flamby",
             niveau = 5,
@@ -163,8 +173,10 @@ class DataInitializer(
         )
 
         individuMonstreDAO.saveAll(listOf(flamby, splash, rocky, zappy, freezy))
+        println("✅ ${individuMonstreDAO.count()} individus monstres créés")
 
         // === EQUIPES ===
+        println("⚔️ Création des équipes...")
         val equipeJean = Equipe(
             nom = "Équipe Fire & Water",
             utilisateur = client
@@ -184,8 +196,10 @@ class DataInitializer(
         zappy.equipe = equipeMarie
 
         individuMonstreDAO.saveAll(listOf(flamby, splash, rocky, zappy))
+        println("✅ ${equipeDAO.count()} équipes créées")
 
         // === COMBATS ===
+        println("🥊 Création des combats...")
         val combat1 = Combat(
             resultat = "VICTOIRE",
             date = LocalDateTime.now().minusDays(2),
@@ -205,8 +219,10 @@ class DataInitializer(
         )
 
         combatDAO.saveAll(listOf(combat1, combat2))
+        println("✅ ${combatDAO.count()} combats créés")
 
         // === COMMENTAIRES ===
+        println("💬 Création des commentaires...")
         val commentaire1 = Commentaire(
             message = "Dracoflame est vraiment impressionnant ! Très puissant en attaque.",
             note = 5,
@@ -232,8 +248,9 @@ class DataInitializer(
         )
 
         commentaireDAO.saveAll(listOf(commentaire1, commentaire2, commentaire3))
+        println("✅ ${commentaireDAO.count()} commentaires créés")
 
-        println("✅ Données initiales insérées :")
+        println("\n✅ ===== INITIALISATION TERMINÉE =====")
         println("   - ${roleDAO.count()} rôles")
         println("   - ${utilisateurDAO.count()} utilisateurs")
         println("   - ${especeMonstreDAO.count()} espèces de monstres")
@@ -241,5 +258,6 @@ class DataInitializer(
         println("   - ${equipeDAO.count()} équipes")
         println("   - ${combatDAO.count()} combats")
         println("   - ${commentaireDAO.count()} commentaires")
+        println("=====================================\n")
     }
 }

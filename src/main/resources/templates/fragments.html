@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<html lang="fr" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Monsters Web</title>
-    <link rel="stylesheet" href="../static/css/style.css">
-    <!DOCTYPE html>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
 
@@ -13,24 +13,56 @@
 <header th:fragment="header" id="header">
     <div class="header-content">
         <div class="logo">🐲 Monsters Web</div>
+
         <nav id="main-nav">
+            <!-- Lien Accueil - toujours visible -->
             <a th:href="@{/}" class="nav-btn">Accueil</a>
-            <a th:href="@{/exploration}" class="nav-btn">Exploration</a>
-            <a th:href="@{/mon-equipe}" class="nav-btn">Mon Équipe</a>
-            <a th:href="@{/inventaire}" class="nav-btn">Inventaire</a>
-            <a th:href="@{/combat}" class="nav-btn">Combat</a>
+
+            <!-- Liens visibles uniquement si l'utilisateur est connecté -->
+            <a th:href="@{/exploration}" class="nav-btn" sec:authorize="isAuthenticated()">Exploration</a>
+            <a th:href="@{/mon-equipe}" class="nav-btn" sec:authorize="isAuthenticated()">Mon Équipe</a>
+            <a th:href="@{/inventaire}" class="nav-btn" sec:authorize="isAuthenticated()">Inventaire</a>
+            <a th:href="@{/combat}" class="nav-btn" sec:authorize="isAuthenticated()">Combat</a>
+
+            <!-- Lien Admin - visible uniquement pour les ADMIN -->
+            <a th:href="@{/monsters-web/admin}" class="nav-btn" sec:authorize="hasRole('ADMIN')"
+               style="background: linear-gradient(135deg, rgba(255, 69, 0, 0.2) 0%, rgba(255, 69, 0, 0.1) 100%); border-color: rgba(255, 69, 0, 0.5); color: #FF4500;">
+                🔧 Admin
+            </a>
         </nav>
+
         <div class="user-info">
-            <span id="user-name">Joueur</span>
-            <button id="logout-btn">Déconnexion</button>
+            <!-- Si l'utilisateur est connecté -->
+            <div sec:authorize="isAuthenticated()" style="display: flex; align-items: center; gap: 1rem;">
+                <span id="user-name" style="color: #7FFF00; font-weight: 700;" sec:authentication="name"></span>
+                <form th:action="@{/logout}" method="post" style="margin: 0;">
+                    <button type="submit" id="logout-btn"
+                            style="background: linear-gradient(135deg, #FF4500 0%, #ff6b35 100%); border: none; color: white; padding: 0.7rem 1.4rem; border-radius: 10px; cursor: pointer; font-weight: 700;">
+                        Déconnexion
+                    </button>
+                </form>
+            </div>
+
+            <!-- Si l'utilisateur n'est pas connecté -->
+            <div sec:authorize="!isAuthenticated()" style="display: flex; gap: 1rem;">
+                <a th:href="@{/login}" class="nav-btn">Connexion</a>
+                <a th:href="@{/inscription}"
+                   style="background: linear-gradient(135deg, #7FFF00 0%, #00ff88 100%); color: #1C1E26; padding: 0.7rem 1.4rem; border-radius: 10px; font-weight: 700; text-decoration: none; border: none;">
+                    Inscription
+                </a>
+            </div>
         </div>
     </div>
 </header>
 
 <!-- ========== FOOTER FRAGMENT ========== -->
 <footer th:fragment="footer">
-    <p>&copy; 2025 Monsters Web - Projet pédagogique</p>
-    <a th:href="@{/rgpd}" id="footer-rgpd-link">Politique de confidentialité</a>
+    <p>&copy; 2025 Monsters Web - Projet pédagogique BTS SIO</p>
+    <div style="margin-top: 1rem;">
+        <a th:href="@{/rgpd}" style="color: #7FFF00; text-decoration: none; margin: 0 1rem;">Politique de confidentialité</a>
+        <a th:href="@{/contact}" style="color: #7FFF00; text-decoration: none; margin: 0 1rem;">Contact</a>
+        <a th:href="@{/a-propos}" style="color: #7FFF00; text-decoration: none; margin: 0 1rem;">À propos</a>
+    </div>
 </footer>
 
 <!-- ========== MODAL RGPD FRAGMENT ========== -->
@@ -49,7 +81,7 @@
             <p>Conformément au RGPD, vous disposez d'un droit d'accès, de rectification et de suppression de vos données personnelles.</p>
 
             <h3>Sécurité</h3>
-            <p>Les données sont stockées de manière sécurisée. Vos informations sont chiffrées et protégées.</p>
+            <p>Les données sont stockées de manière sécurisée. Vos mots de passe sont chiffrés avec BCrypt.</p>
 
             <h3>Contact</h3>
             <p>Pour toute question : contact@monstersweb.fr</p>
@@ -59,5 +91,4 @@
 </div>
 
 </body>
-<script src="../static/js/game.js"></script>
 </html>

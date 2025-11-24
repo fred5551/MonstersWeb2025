@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org" th:replace="~{base :: html}">
+<head>
+    <meta charset="UTF-8">
+    <title>Monsters Web - Connexion</title>
+</head>
+<body>
+<div th:fragment="content">
+    <div class="hero-section">
+        <h1>Connexion</h1>
+        <p class="hero-subtitle">Connectez-vous pour jouer à Monsters Web</p>
+
+        <div class="auth-section" style="max-width: 500px; margin: 2rem auto;">
+
+            <!-- Message d'erreur si identifiants incorrects -->
+            <div th:if="${error}"
+                 style="background: rgba(220, 53, 69, 0.2); border: 2px solid #dc3545; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; color: #dc3545; text-align: center;">
+                <strong>⚠️ Erreur de connexion</strong>
+                <p style="margin-top: 0.5rem;">Identifiants incorrects. Veuillez réessayer.</p>
+            </div>
+
+            <!-- Formulaire de connexion -->
+            <form th:action="@{/login-process}" method="post" class="auth-form active">
+                <h2>Se connecter</h2>
+
+                <!-- Email -->
+                <div style="margin-bottom: 1.5rem;">
+                    <label for="username" style="display: block; color: #7FFF00; margin-bottom: 0.5rem; font-weight: 600;">Email</label>
+                    <input type="email"
+                           id="username"
+                           name="username"
+                           placeholder="votre@email.com"
+                           required
+                           style="width: 100%; padding: 1rem; background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(127, 255, 0, 0.3); border-radius: 8px; color: white; font-size: 1rem;">
+                </div>
+
+                <!-- Mot de passe -->
+                <div style="margin-bottom: 1.5rem;">
+                    <label for="password" style="display: block; color: #7FFF00; margin-bottom: 0.5rem; font-weight: 600;">Mot de passe</label>
+                    <input type="password"
+                           id="password"
+                           name="password"
+                           placeholder="••••••••"
+                           required
+                           style="width: 100%; padding: 1rem; background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(127, 255, 0, 0.3); border-radius: 8px; color: white; font-size: 1rem;">
+                </div>
+
+                <!-- Bouton de soumission -->
+                <button type="submit"
+                        style="width: 100%; background: #7FFF00; color: #1C1E26; border: none; padding: 1rem; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 1rem; text-transform: uppercase; letter-spacing: 1px;">
+                    Se connecter
+                </button>
+            </form>
+
+            <!-- Lien vers l'inscription -->
+            <div style="margin-top: 2rem; text-align: center;">
+                <p style="color: #b0b0b0;">
+                    Pas encore de compte ?
+                    <a th:href="@{/inscription}" style="color: #7FFF00; text-decoration: none; font-weight: 600;">Inscrivez-vous</a>
+                </p>
+            </div>
+
+            <!-- Informations de test -->
+            <div style="margin-top: 3rem; padding: 1.5rem; background: rgba(127, 255, 0, 0.1); border: 1px solid rgba(127, 255, 0, 0.3); border-radius: 8px;">
+                <h3 style="color: #7FFF00; margin-bottom: 1rem; font-size: 1rem;">🔐 Comptes de test</h3>
+                <div style="color: #b0b0b0; font-size: 0.9rem; line-height: 1.8;">
+                    <p><strong>Admin :</strong> admin@admin.com / admin123</p>
+                    <p><strong>Client :</strong> client@client.com / client123</p>
+                    <p><strong>Marie :</strong> marie@client.com / marie123</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

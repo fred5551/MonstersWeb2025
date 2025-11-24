@@ -1,14 +1,16 @@
 package org.ldv.monstersweb.controller
 
+import org.springframework.security.core.Authentication
 import org.springframework.stereotype.Controller
+import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RequestParam
 
 @Controller
 class MainController {
 
     /**
      * Page d'accueil de l'application
-     * @return le chemin vers le template index.html
      */
     @GetMapping("/")
     fun home(): String {
@@ -16,8 +18,37 @@ class MainController {
     }
 
     /**
+     * Page de connexion
+     * @param error indique si une erreur de connexion s'est produite
+     */
+    @GetMapping("/login")
+    fun login(@RequestParam(required = false) error: Boolean?, model: Model): String {
+        // Ajoute un attribut "error" au modèle si la requête contient une erreur
+        model.addAttribute("error", error == true)
+        return "pagesVisiteur/login"
+    }
+
+    /**
+     * Page de profil - Redirection selon le rôle
+     * - Si ADMIN : redirige vers le dashboard admin
+     * - Si CLIENT : affiche la page profil client
+     */
+    @GetMapping("/profil")
+    fun profile(authentication: Authentication): String {
+        // Récupération des rôles (authorities) de l'utilisateur connecté
+        val roles = authentication.authorities.map { it.authority }
+
+        // Si l'utilisateur est admin → redirection vers le dashboard
+        if ("ROLE_ADMIN" in roles) {
+            return "redirect:/monsters-web/admin"
+        }
+
+        // Sinon → on affiche la page profile client
+        return "pagesVisiteur/profile"
+    }
+
+    /**
      * Page À propos
-     * @return le chemin vers le template a-propos.html
      */
     @GetMapping("/a-propos")
     fun aPropos(): String {
@@ -26,7 +57,6 @@ class MainController {
 
     /**
      * Page Contact
-     * @return le chemin vers le template contact.html
      */
     @GetMapping("/contact")
     fun contact(): String {
@@ -35,7 +65,6 @@ class MainController {
 
     /**
      * Page Inscription
-     * @return le chemin vers le template inscription.html
      */
     @GetMapping("/inscription")
     fun inscription(): String {
@@ -43,8 +72,7 @@ class MainController {
     }
 
     /**
-     * Page Exploration
-     * @return le chemin vers le template exploration.html
+     * Page Exploration - Réservée aux clients connectés
      */
     @GetMapping("/exploration")
     fun exploration(): String {
@@ -52,8 +80,7 @@ class MainController {
     }
 
     /**
-     * Page Mon Équipe
-     * @return le chemin vers le template mon-equipe.html
+     * Page Mon Équipe - Réservée aux clients connectés
      */
     @GetMapping("/mon-equipe")
     fun monEquipe(): String {
@@ -61,8 +88,7 @@ class MainController {
     }
 
     /**
-     * Page Inventaire
-     * @return le chemin vers le template inventaire.html
+     * Page Inventaire - Réservée aux clients connectés
      */
     @GetMapping("/inventaire")
     fun inventaire(): String {
@@ -70,8 +96,7 @@ class MainController {
     }
 
     /**
-     * Page Combat
-     * @return le chemin vers le template combat.html
+     * Page Combat - Réservée aux clients connectés
      */
     @GetMapping("/combat")
     fun combat(): String {
@@ -80,7 +105,6 @@ class MainController {
 
     /**
      * Page RGPD
-     * @return le chemin vers le template rgpd.html
      */
     @GetMapping("/rgpd")
     fun rgpd(): String {
