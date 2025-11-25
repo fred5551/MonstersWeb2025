@@ -1,4 +1,4 @@
-package org.ldv.model.entity
+package org.ldv.monstersweb.model.entity
 import jakarta.persistence.*
 import java.time.LocalDateTime
 

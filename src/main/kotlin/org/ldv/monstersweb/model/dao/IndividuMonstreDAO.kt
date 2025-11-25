@@ -1,6 +1,7 @@
-package org.ldv.model.dao
+package org.ldv.monstersweb.model.dao
 
-import org.ldv.model.entity.IndividuMonstre
+
+import org.ldv.monstersweb.model.entity.IndividuMonstre
 import org.springframework.data.jpa.repository.JpaRepository
 
 

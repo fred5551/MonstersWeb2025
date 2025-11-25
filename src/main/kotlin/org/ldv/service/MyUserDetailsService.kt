@@ -1,6 +1,7 @@
 package org.ldv.service
 
-import org.ldv.model.dao.UtilisateurDAO
+
+import org.ldv.monstersweb.model.dao.UtilisateurDAO
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException

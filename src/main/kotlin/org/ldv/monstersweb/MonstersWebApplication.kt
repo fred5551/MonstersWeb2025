@@ -8,8 +8,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 
 @SpringBootApplication
 @ComponentScan(basePackages = ["org.ldv.monstersweb", "org.ldv.service"])
-@EnableJpaRepositories(basePackages = ["org.ldv.model.dao"])
-@EntityScan(basePackages = ["org.ldv.model.entity"])
+@EnableJpaRepositories(basePackages = ["org.ldv.monstersweb.model.dao"])
+@EntityScan(basePackages = ["org.ldv.monstersweb.model.entity"])
 class MonstersWebApplication
 
 fun main(args: Array<String>) {

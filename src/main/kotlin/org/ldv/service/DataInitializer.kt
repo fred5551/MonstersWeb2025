@@ -1,9 +1,10 @@
 package org.ldv.service
 
-import org.ldv.model.dao.*
-import org.ldv.model.entity.*
+import org.ldv.monstersweb.model.dao.*
+import org.ldv.monstersweb.model.entity.*
 import org.springframework.boot.CommandLineRunner
 import org.springframework.security.crypto.password.PasswordEncoder
+
 import org.springframework.stereotype.Component
 import java.time.LocalDateTime
 

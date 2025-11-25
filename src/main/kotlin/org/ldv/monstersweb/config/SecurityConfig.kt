@@ -23,7 +23,7 @@ class SecurityConfig {
      * Bean pour l'encodage des mots de passe avec BCrypt
      */
     @Bean
-    fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder()
+    open fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder()
 
     /**
      * Configuration de la chaîne de filtres de sécurité

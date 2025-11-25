@@ -1,7 +1,8 @@
 package org.ldv.monstersweb.controller.admincontrollers
 
-import org.ldv.model.dao.EspeceMonstreDAO
-import org.ldv.model.entity.EspeceMonstre
+
+import org.ldv.monstersweb.model.dao.EspeceMonstreDAO
+import org.ldv.monstersweb.model.entity.EspeceMonstre
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
@@ -36,7 +37,8 @@ class AdminEspeceController(
             nom = "",
             type = "",
             description = ""
-        ))
+        )
+        )
         return "admin/espece/create"
     }
 
