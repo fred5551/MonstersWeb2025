@@ -43,10 +43,9 @@ class MainController {
             return "redirect:/monsters-web/admin"
         }
 
-        // Sinon → on affiche la page profile client
-        return "pagesVisiteur/profile"
+        // Sinon → on redirige vers le profil joueur
+        return "redirect:/joueur/profil"
     }
-
     /**
      * Page À propos
      */
@@ -110,4 +109,5 @@ class MainController {
     fun rgpd(): String {
         return "pagesVisiteur/rgpd"
     }
+
 }

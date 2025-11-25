@@ -19,10 +19,9 @@
             <a th:href="@{/}" class="nav-btn">Accueil</a>
 
             <!-- Liens visibles uniquement si l'utilisateur est connecté -->
-            <a th:href="@{/exploration}" class="nav-btn" sec:authorize="isAuthenticated()">Exploration</a>
-            <a th:href="@{/mon-equipe}" class="nav-btn" sec:authorize="isAuthenticated()">Mon Équipe</a>
-            <a th:href="@{/inventaire}" class="nav-btn" sec:authorize="isAuthenticated()">Inventaire</a>
-            <a th:href="@{/combat}" class="nav-btn" sec:authorize="isAuthenticated()">Combat</a>
+            <a th:href="@{/joueur/exploration}" class="nav-btn" sec:authorize="isAuthenticated()">Exploration</a>
+            <a th:href="@{/joueur/mon-equipe}" class="nav-btn" sec:authorize="isAuthenticated()">Mon Équipe</a>
+            <a th:href="@{/joueur/combat}" class="nav-btn" sec:authorize="isAuthenticated()">Combat</a>
 
             <!-- Lien Admin - visible uniquement pour les ADMIN -->
             <a th:href="@{/monsters-web/admin}" class="nav-btn" sec:authorize="hasRole('ADMIN')"

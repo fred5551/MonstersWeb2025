@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org" th:replace="~{base :: html}">
+<head>
+    <meta charset="UTF-8">
+    <title>Monsters Web - Rencontre Sauvage</title>
+</head>
+<body>
+<div th:fragment="content">
+    <div style="max-width: 900px; margin: 2rem auto; padding: 2rem;">
+
+        <!-- En-tête animé -->
+        <div style="text-align: center; margin-bottom: 3rem; animation: bounce 1s ease;">
+            <h1 style="color: #FF4500; font-size: 3rem; margin-bottom: 1rem; text-shadow: 0 0 30px rgba(255, 69, 0, 0.8); animation: pulse 2s infinite;">
+                ⚠️ Un monstre sauvage apparaît !
+            </h1>
+            <p style="color: #b0b0b0; font-size: 1.1rem;">
+                Zone: <span style="color: #7FFF00; font-weight: 700; text-transform: capitalize;" th:text="${zone}"></span>
+            </p>
+        </div>
+
+        <!-- Carte du monstre sauvage -->
+        <div style="background: linear-gradient(145deg, rgba(255, 69, 0, 0.15) 0%, rgba(255, 69, 0, 0.05) 100%); border: 3px solid rgba(255, 69, 0, 0.5); border-radius: 24px; padding: 3rem; text-align: center; position: relative; overflow: hidden; box-shadow: 0 20px 60px rgba(255, 69, 0, 0.3); animation: encounterGlow 2s ease-in-out infinite;">
+
+            <!-- Effet de fond animé -->
+            <div style="position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255, 69, 0, 0.1) 0%, transparent 70%); animation: rotate 10s linear infinite; pointer-events: none;"></div>
+
+            <!-- Type du monstre -->
+            <div style="display: inline-block; background: rgba(255, 69, 0, 0.3); border: 2px solid #FF4500; border-radius: 20px; padding: 0.5rem 1.5rem; font-size: 0.9rem; font-weight: 700; color: #FF4500; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 2rem; position: relative; z-index: 1;">
+                <span th:text="${monstreSauvage.espece.type}">Type</span>
+            </div>
+
+            <!-- Sprite du monstre (emoji basé sur le type) -->
+            <div style="font-size: 8rem; margin-bottom: 2rem; animation: monsterBounce 1s ease-in-out infinite; filter: drop-shadow(0 20px 40px rgba(255, 69, 0, 0.6)); position: relative; z-index: 1;">
+                <span th:if="${monstreSauvage.espece.type == 'Feu'}">🔥</span>
+                <span th:if="${monstreSauvage.espece.type == 'Eau'}">💧</span>
+                <span th:if="${monstreSauvage.espece.type == 'Plante'}">🌿</span>
+                <span th:if="${monstreSauvage.espece.type == 'Électrique'}">⚡</span>
+                <span th:if="${monstreSauvage.espece.type == 'Glace'}">❄️</span>
+                <span th:if="${monstreSauvage.espece.type == 'Roche'}">🪨</span>
+                <span th:if="${monstreSauvage.espece.type == 'Vol'}">🦅</span>
+                <span th:if="${monstreSauvage.espece.type == 'Poison'}">☠️</span>
+                <span th:if="${monstreSauvage.espece.type == 'Ténèbres'}">🌑</span>
+                <span th:if="${monstreSauvage.espece.type != 'Feu' && monstreSauvage.espece.type != 'Eau' && monstreSauvage.espece.type != 'Plante' && monstreSauvage.espece.type != 'Électrique' && monstreSauvage.espece.type != 'Glace' && monstreSauvage.espece.type != 'Roche' && monstreSauvage.espece.type != 'Vol' && monstreSauvage.espece.type != 'Poison' && monstreSauvage.espece.type != 'Ténèbres'}">👾</span>
+            </div>
+
+            <!-- Nom et niveau -->
+            <h2 style="color: #FF4500; font-size: 2.5rem; margin-bottom: 0.5rem; font-weight: 900; text-shadow: 0 0 20px rgba(255, 69, 0, 0.8); position: relative; z-index: 1;"
+                th:text="${monstreSauvage.nom}">Nom Monstre</h2>
+
+            <p style="color: #FF6347; font-size: 1.2rem; font-weight: 700; margin-bottom: 2rem; position: relative; z-index: 1;">
+                Niveau <span th:text="${monstreSauvage.niveau}">5</span>
+            </p>
+
+            <!-- Description -->
+            <p style="color: #b0b0b0; line-height: 1.8; margin-bottom: 2.5rem; max-width: 600px; margin-left: auto; margin-right: auto; position: relative; z-index: 1;"
+               th:text="${monstreSauvage.espece.description}">Description</p>
+
+            <!-- Statistiques du monstre -->
+            <div style="background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(10px); border-radius: 16px; padding: 2rem; margin-bottom: 2.5rem; position: relative; z-index: 1;">
+                <h3 style="color: #FF4500; margin-bottom: 1.5rem; font-size: 1.2rem; text-transform: uppercase; letter-spacing: 3px;">
+                    📊 Statistiques
+                </h3>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1.5rem;">
+                    <!-- PV -->
+                    <div style="background: rgba(255, 107, 107, 0.2); border: 2px solid #ff6b6b; border-radius: 12px; padding: 1rem;">
+                        <p style="color: #ff6b6b; font-size: 0.85rem; margin-bottom: 0.5rem; font-weight: 600;">❤️ POINTS DE VIE</p>
+                        <p style="color: white; font-size: 2rem; font-weight: 900;" th:text="${monstreSauvage.pv}">0</p>
+                    </div>
+
+                    <!-- Attaque -->
+                    <div style="background: rgba(255, 165, 2, 0.2); border: 2px solid #ffa502; border-radius: 12px; padding: 1rem;">
+                        <p style="color: #ffa502; font-size: 0.85rem; margin-bottom: 0.5rem; font-weight: 600;">⚔️ ATTAQUE</p>
+                        <p style="color: white; font-size: 2rem; font-weight: 900;" th:text="${monstreSauvage.attaque}">0</p>
+                    </div>
+
+                    <!-- Défense -->
+                    <div style="background: rgba(79, 172, 254, 0.2); border: 2px solid #4facfe; border-radius: 12px; padding: 1rem;">
+                        <p style="color: #4facfe; font-size: 0.85rem; margin-bottom: 0.5rem; font-weight: 600;">🛡️ DÉFENSE</p>
+                        <p style="color: white; font-size: 2rem; font-weight: 900;" th:text="${monstreSauvage.defense}">0</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Taux de capture estimé -->
+            <div style="background: rgba(127, 255, 0, 0.1); border: 2px solid rgba(127, 255, 0, 0.3); border-radius: 12px; padding: 1rem; margin-bottom: 2.5rem; position: relative; z-index: 1;">
+                <p style="color: #7FFF00; font-size: 0.9rem; font-weight: 600;">
+                    💡 Taux de capture estimé:
+                    <strong th:text="${50 + (10 - (monstreSauvage.niveau > 10 ? 10 : monstreSauvage.niveau)) * 5} + '%'">50%</strong>
+                </p>
+            </div>
+
+            <!-- Actions -->
+            <div style="display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; position: relative; z-index: 1;">
+
+                <!-- Capturer -->
+                <form th:action="@{'/monsters-web/joueur/capturer/' + ${monstreSauvage.id}}" method="post" style="margin: 0;">
+                    <button type="submit"
+                            style="background: linear-gradient(135deg, #7FFF00 0%, #00ff88 100%); color: #1C1E26; border: none; padding: 1.2rem 2.5rem; border-radius: 12px; cursor: pointer; font-weight: 800; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s ease; box-shadow: 0 10px 30px rgba(127, 255, 0, 0.5);">
+                        ⚾ Tenter de capturer
+                    </button>
+                </form>
+
+                <!-- Fuir -->
+                <a th:href="@{/monsters-web/joueur/zone}"
+                   style="display: inline-block; background: rgba(255, 255, 255, 0.1); border: 2px solid rgba(255, 255, 255, 0.3); color: white; padding: 1.2rem 2.5rem; border-radius: 12px; text-decoration: none; font-weight: 700; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s ease;">
+                    🏃 Fuir
+                </a>
+            </div>
+        </div>
+
+        <!-- Conseil -->
+        <div style="background: rgba(127, 255, 0, 0.05); border: 2px solid rgba(127, 255, 0, 0.2); border-radius: 12px; padding: 1.5rem; margin-top: 2rem; text-align: center;">
+            <p style="color: #7FFF00; font-weight: 600; margin-bottom: 0.5rem;">💡 Conseil</p>
+            <p style="color: #b0b0b0; line-height: 1.6;">
+                Plus le monstre est de haut niveau, plus il est difficile à capturer.<br>
+                Tentez votre chance ou fuyez pour chercher un monstre plus faible !
+            </p>
+        </div>
+    </div>
+</div>
+
+<style>
+    @keyframes bounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-20px); }
+    }
+
+    @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.7; }
+    }
+
+    @keyframes monsterBounce {
+        0%, 100% { transform: translateY(0) scale(1); }
+        50% { transform: translateY(-15px) scale(1.1); }
+    }
+
+    @keyframes encounterGlow {
+        0%, 100% {
+            box-shadow: 0 20px 60px rgba(255, 69, 0, 0.3), 0 0 0 1px rgba(255, 69, 0, 0.2) inset;
+        }
+        50% {
+            box-shadow: 0 20px 60px rgba(255, 69, 0, 0.6), 0 0 0 1px rgba(255, 69, 0, 0.5) inset;
+        }
+    }
+
+    @keyframes rotate {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+
+    button:hover, a:hover {
+        transform: translateY(-3px) scale(1.05);
+    }
+</style>
+</body>
+</html>

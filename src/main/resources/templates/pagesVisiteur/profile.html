@@ -1,79 +1,117 @@
 <!DOCTYPE html>
-<html lang="fr" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      th:replace="~{base :: html}">
+<html lang="fr" xmlns:th="http://www.thymeleaf.org" th:replace="~{base :: html}">
 <head>
     <meta charset="UTF-8">
     <title>Monsters Web - Profil</title>
 </head>
 <body>
 <div th:fragment="content">
-    <div class="hero-section">
-        <h1>Mon Profil</h1>
-        <p class="hero-subtitle">Bienvenue <span sec:authentication="name" style="color: #7FFF00; font-weight: 700;"></span> !</p>
+    <div style="max-width: 1200px; margin: 2rem auto; padding: 2rem;">
+        <h1 style="text-align: center; color: #7FFF00; margin-bottom: 3rem;">
+            🎮 Profil de <span th:text="${utilisateur.pseudo}"></span>
+        </h1>
 
-        <div style="max-width: 900px; margin: 2rem auto;">
+        <!-- Messages flash -->
+        <div th:if="${success}"
+             style="background: rgba(127, 255, 0, 0.2); border: 2px solid #7FFF00; padding: 1rem; border-radius: 8px; margin-bottom: 2rem; color: #7FFF00; text-align: center;">
+            <span th:text="${success}"></span>
+        </div>
 
-            <!-- Informations utilisateur -->
-            <div style="background: rgba(255, 255, 255, 0.05); padding: 2rem; border-radius: 16px; border: 2px solid rgba(127, 255, 0, 0.3); margin-bottom: 2rem;">
-                <h2 style="color: #7FFF00; margin-bottom: 1.5rem;">Informations du compte</h2>
+        <!-- Statistiques du joueur -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-bottom: 3rem;">
 
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
-                    <div>
-                        <label style="display: block; color: #b0b0b0; margin-bottom: 0.5rem;">Email :</label>
-                        <p style="color: white; font-size: 1.1rem;" sec:authentication="name"></p>
-                    </div>
-                    <div>
-                        <label style="display: block; color: #b0b0b0; margin-bottom: 0.5rem;">Rôle :</label>
-                        <p style="color: #7FFF00; font-size: 1.1rem; font-weight: 600;" sec:authentication="principal.authorities"></p>
-                    </div>
+            <div class="stat-card" style="background: linear-gradient(145deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%); border: 2px solid rgba(127, 255, 0, 0.3); border-radius: 16px; padding: 2rem; text-align: center;">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">👾</div>
+                <h3 style="color: #b0b0b0; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1rem;">Monstres capturés</h3>
+                <p style="color: #7FFF00; font-size: 3rem; font-weight: 900;" th:text="${nbMonstres}">0</p>
+            </div>
+
+            <div class="stat-card" style="background: linear-gradient(145deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%); border: 2px solid rgba(127, 255, 0, 0.3); border-radius: 16px; padding: 2rem; text-align: center;">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">⚔️</div>
+                <h3 style="color: #b0b0b0; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1rem;">Combats totaux</h3>
+                <p style="color: #7FFF00; font-size: 3rem; font-weight: 900;" th:text="${nbCombats}">0</p>
+            </div>
+
+            <div class="stat-card" style="background: linear-gradient(145deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%); border: 2px solid rgba(127, 255, 0, 0.3); border-radius: 16px; padding: 2rem; text-align: center;">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">🏆</div>
+                <h3 style="color: #b0b0b0; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1rem;">Victoires</h3>
+                <p style="color: #7FFF00; font-size: 3rem; font-weight: 900;" th:text="${nbVictoires}">0</p>
+            </div>
+
+            <div class="stat-card" style="background: linear-gradient(145deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%); border: 2px solid rgba(127, 255, 0, 0.3); border-radius: 16px; padding: 2rem; text-align: center;">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">📊</div>
+                <h3 style="color: #b0b0b0; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1rem;">Taux de victoire</h3>
+                <p style="color: #7FFF00; font-size: 3rem; font-weight: 900;"
+                   th:text="${nbCombats > 0 ? #numbers.formatDecimal((nbVictoires * 100.0 / nbCombats), 1, 0) + '%' : '0%'}">0%</p>
+            </div>
+        </div>
+
+        <!-- Actions principales -->
+        <div style="background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(127, 255, 0, 0.3); border-radius: 16px; padding: 3rem; text-align: center;">
+
+            <!-- Si le joueur n'a pas de starter -->
+            <div th:if="${!hasStarter}">
+                <h2 style="color: #7FFF00; margin-bottom: 1.5rem;">🎯 Commencez votre aventure !</h2>
+                <p style="color: #b0b0b0; margin-bottom: 2rem; font-size: 1.1rem;">
+                    Choisissez votre premier monstre pour débuter votre quête de dresseur !
+                </p>
+                <a th:href="@{/monsters-web/joueur/starter}"
+                   style="display: inline-block; background: linear-gradient(135deg, #7FFF00 0%, #00ff88 100%); color: #1C1E26; padding: 1.5rem 3rem; border-radius: 12px; text-decoration: none; font-weight: 800; font-size: 1.2rem; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s ease;">
+                    🐉 Choisir mon Starter
+                </a>
+            </div>
+
+            <!-- Si le joueur a déjà un starter -->
+            <div th:if="${hasStarter}">
+                <h2 style="color: #7FFF00; margin-bottom: 2rem;">🎮 Que voulez-vous faire ?</h2>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-top: 2rem;">
+
+                    <a th:href="@{/monsters-web/joueur/zone}"
+                       style="display: block; background: linear-gradient(145deg, rgba(127, 255, 0, 0.15) 0%, rgba(127, 255, 0, 0.05) 100%); border: 2px solid rgba(127, 255, 0, 0.3); border-radius: 12px; padding: 2rem; text-decoration: none; transition: all 0.3s ease;">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🗺️</div>
+                        <h3 style="color: #7FFF00; margin-bottom: 0.5rem;">Zone de Jeu</h3>
+                        <p style="color: #b0b0b0;">Explorez et capturez des monstres</p>
+                    </a>
+
+                    <a th:href="@{/monsters-web/joueur/equipe}"
+                       style="display: block; background: linear-gradient(145deg, rgba(127, 255, 0, 0.15) 0%, rgba(127, 255, 0, 0.05) 100%); border: 2px solid rgba(127, 255, 0, 0.3); border-radius: 12px; padding: 2rem; text-decoration: none; transition: all 0.3s ease;">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">👥</div>
+                        <h3 style="color: #7FFF00; margin-bottom: 0.5rem;">Mon Équipe</h3>
+                        <p style="color: #b0b0b0;">Gérez vos monstres</p>
+                    </a>
+
+                    <a th:href="@{/monsters-web/joueur/combat/selection}"
+                       style="display: block; background: linear-gradient(145deg, rgba(255, 69, 0, 0.15) 0%, rgba(255, 69, 0, 0.05) 100%); border: 2px solid rgba(255, 69, 0, 0.3); border-radius: 12px; padding: 2rem; text-decoration: none; transition: all 0.3s ease;">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">⚔️</div>
+                        <h3 style="color: #FF4500; margin-bottom: 0.5rem;">Combat</h3>
+                        <p style="color: #b0b0b0;">Défiez des adversaires</p>
+                    </a>
                 </div>
             </div>
+        </div>
 
-            <!-- Statistiques du joueur -->
-            <div style="background: rgba(255, 255, 255, 0.05); padding: 2rem; border-radius: 16px; border: 2px solid rgba(127, 255, 0, 0.3); margin-bottom: 2rem;">
-                <h2 style="color: #7FFF00; margin-bottom: 1.5rem;">Statistiques de jeu</h2>
+        <!-- Équipe active (si existante) -->
+        <div th:if="${equipeActive != null && !equipeActive.monstres.isEmpty()}"
+             style="margin-top: 3rem;">
+            <h2 style="color: #7FFF00; text-align: center; margin-bottom: 2rem;">🏆 Votre Équipe Active</h2>
 
-                <div class="stats-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
-                    <div style="text-align: center; padding: 1rem; background: rgba(127, 255, 0, 0.05); border-radius: 12px;">
-                        <p style="color: #b0b0b0; margin-bottom: 0.5rem;">Monstres capturés</p>
-                        <p style="color: #7FFF00; font-size: 2rem; font-weight: 700;">5</p>
-                    </div>
-                    <div style="text-align: center; padding: 1rem; background: rgba(127, 255, 0, 0.05); border-radius: 12px;">
-                        <p style="color: #b0b0b0; margin-bottom: 0.5rem;">Combats gagnés</p>
-                        <p style="color: #7FFF00; font-size: 2rem; font-weight: 700;">12</p>
-                    </div>
-                    <div style="text-align: center; padding: 1rem; background: rgba(127, 255, 0, 0.05); border-radius: 12px;">
-                        <p style="color: #b0b0b0; margin-bottom: 0.5rem;">Niveau</p>
-                        <p style="color: #7FFF00; font-size: 2rem; font-weight: 700;">8</p>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
+                <div th:each="monstre : ${equipeActive.monstres}"
+                     style="background: linear-gradient(145deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%); border: 2px solid rgba(127, 255, 0, 0.3); border-radius: 12px; padding: 1.5rem; text-align: center;">
+                    <h4 style="color: #7FFF00; margin-bottom: 0.5rem;" th:text="${monstre.nom}">Monstre</h4>
+                    <p style="color: #b0b0b0; font-size: 0.9rem;">
+                        <span th:text="'Niv. ' + ${monstre.niveau}"></span> •
+                        <span th:text="${monstre.espece.type}"></span>
+                    </p>
+                    <div style="background: rgba(0, 0, 0, 0.3); border-radius: 8px; padding: 0.5rem; margin-top: 1rem;">
+                        <div style="display: flex; justify-content: space-around; font-size: 0.85rem;">
+                            <span style="color: #ff4444;">❤️ <span th:text="${monstre.pv}"></span></span>
+                            <span style="color: #ff8844;">⚔️ <span th:text="${monstre.attaque}"></span></span>
+                            <span style="color: #4488ff;">🛡️ <span th:text="${monstre.defense}"></span></span>
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            <!-- Actions rapides -->
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
-                <a th:href="@{/exploration}"
-                   style="display: block; text-align: center; background: linear-gradient(135deg, #7FFF00 0%, #00ff88 100%); color: #1C1E26; padding: 1.5rem; border-radius: 12px; text-decoration: none; font-weight: 700; transition: all 0.3s ease;">
-                    🌲 Explorer
-                </a>
-                <a th:href="@{/mon-equipe}"
-                   style="display: block; text-align: center; background: linear-gradient(135deg, #7FFF00 0%, #00ff88 100%); color: #1C1E26; padding: 1.5rem; border-radius: 12px; text-decoration: none; font-weight: 700; transition: all 0.3s ease;">
-                    ⚔️ Mon Équipe
-                </a>
-                <a th:href="@{/combat}"
-                   style="display: block; text-align: center; background: linear-gradient(135deg, #FF4500 0%, #ff6b35 100%); color: white; padding: 1.5rem; border-radius: 12px; text-decoration: none; font-weight: 700; transition: all 0.3s ease;">
-                    🥊 Combattre
-                </a>
-            </div>
-
-            <!-- Bouton de déconnexion -->
-            <div style="text-align: center; margin-top: 3rem;">
-                <form th:action="@{/logout}" method="post" style="display: inline-block;">
-                    <button type="submit"
-                            style="background: rgba(220, 53, 69, 0.2); border: 2px solid #dc3545; color: #dc3545; padding: 1rem 2rem; border-radius: 8px; cursor: pointer; font-weight: 700; transition: all 0.3s ease;">
-                        🚪 Se déconnecter
-                    </button>
-                </form>
             </div>
         </div>
     </div>

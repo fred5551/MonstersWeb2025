@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org" th:replace="~{base :: html}">
+<head>
+    <meta charset="UTF-8">
+    <title>Monsters Web - Mon Équipe</title>
+</head>
+<body>
+<div th:fragment="content">
+    <div style="max-width: 1400px; margin: 2rem auto; padding: 2rem;">
+
+        <!-- En-tête -->
+        <div style="text-align: center; margin-bottom: 3rem;">
+            <h1 style="color: #7FFF00; font-size: 3rem; margin-bottom: 1rem;">
+                👥 Gestion de l'Équipe
+            </h1>
+            <p style="color: #b0b0b0; font-size: 1.1rem;">
+                Gérez vos monstres et composez l'équipe parfaite (maximum 6 monstres actifs)
+            </p>
+        </div>
+
+        <!-- Messages flash -->
+        <div th:if="${success}"
+             style="background: rgba(127, 255, 0, 0.2); border: 2px solid #7FFF00; padding: 1rem; border-radius: 8px; margin-bottom: 2rem; color: #7FFF00; text-align: center; animation: slideIn 0.5s ease;">
+            <span th:text="${success}"></span>
+        </div>
+
+        <div th:if="${error}"
+             style="background: rgba(220, 53, 69, 0.2); border: 2px solid #dc3545; padding: 1rem; border-radius: 8px; margin-bottom: 2rem; color: #dc3545; text-align: center; animation: slideIn 0.5s ease;">
+            <span th:text="${error}"></span>
+        </div>
+
+        <!-- Indicateur d'équipe -->
+        <div style="background: linear-gradient(145deg, rgba(127, 255, 0, 0.08), rgba(127, 255, 0, 0.03)); border: 2px solid rgba(127, 255, 0, 0.3); border-radius: 16px; padding: 2rem; margin-bottom: 3rem; text-align: center;">
+            <h3 style="color: #7FFF00; margin-bottom: 1rem; font-size: 1.5rem;">Composition de l'équipe</h3>
+            <div style="display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap;">
+                <div th:each="i : ${#numbers.sequence(1, 6)}"
+                     th:with="hasMonster=${i <= monstresActifs.size()}"
+                     style="width: 70px; height: 70px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 2rem; transition: all 0.3s ease;"
+                     th:style="${hasMonster ? 'background: linear-gradient(135deg, rgba(127, 255, 0, 0.3), rgba(127, 255, 0, 0.1)); border: 3px solid rgba(127, 255, 0, 0.6);' : 'background: rgba(255, 255, 255, 0.05); border: 3px dashed rgba(255, 255, 255, 0.2);'}">
+                    <span th:if="${hasMonster}">✓</span>
+                    <span th:unless="${hasMonster}" style="color: #666;">○</span>
+                </div>
+            </div>
+            <p style="color: #b0b0b0; margin-top: 1rem;">
+                <span style="color: #7FFF00; font-weight: 700; font-size: 1.5rem;" th:text="${monstresActifs.size()}">0</span> / 6 monstres actifs
+            </p>
+            <p th:if="${peutAjouter}" style="color: #7FFF00; font-size: 0.9rem; margin-top: 0.5rem;">
+                ✨ Vous pouvez encore ajouter <span th:text="${6 - monstresActifs.size()}">6</span> monstre(s)
+            </p>
+            <p th:unless="${peutAjouter}" style="color: #FF4500; font-size: 0.9rem; margin-top: 0.5rem;">
+                ⚠️ Votre équipe est complète ! Retirez un monstre pour en ajouter un autre.
+            </p>
+        </div>
+
+        <!-- Équipe Active -->
+        <div style="margin-bottom: 4rem;">
+            <h2 style="color: #7FFF00; margin-bottom: 2rem; font-size: 2rem; text-align: center;">⚔️ Équipe Active</h2>
+
+            <div th:if="${monstresActifs.isEmpty()}"
+                 style="background: rgba(255, 255, 255, 0.05); border: 2px dashed rgba(127, 255, 0, 0.3); border-radius: 12px; padding: 3rem; text-align: center;">
+                <p style="color: #b0b0b0; font-size: 1.1rem;">
+                    Aucun monstre dans votre équipe active.<br>
+                    Ajoutez des monstres depuis la réserve ci-dessous !
+                </p>
+            </div>
+
+            <div th:unless="${monstresActifs.isEmpty()}"
+                 style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem;">
+
+                <div th:each="monstre : ${monstresActifs}"
+                     class="monster-card"
+                     style="background: linear-gradient(145deg, rgba(127, 255, 0, 0.15), rgba(127, 255, 0, 0.05)); border: 2px solid rgba(127, 255, 0, 0.5); border-radius: 16px; padding: 1.5rem; transition: all 0.3s ease; position: relative; overflow: hidden;">
+
+                    <!-- Badge actif -->
+                    <div style="position: absolute; top: 1rem; right: 1rem; background: #7FFF00; color: #1C1E26; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">
+                        Actif
+                    </div>
+
+                    <!-- Type -->
+                    <div style="display: inline-block; background: rgba(127, 255, 0, 0.2); border: 1px solid rgba(127, 255, 0, 0.5); border-radius: 15px; padding: 0.2rem 0.8rem; font-size: 0.75rem; font-weight: 600; color: #7FFF00; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1rem;">
+                        <span th:text="${monstre.espece.type}">Type</span>
+                    </div>
+
+                    <!-- Nom et niveau -->
+                    <h3 style="color: #7FFF00; font-size: 1.5rem; margin-bottom: 0.3rem; font-weight: 800;"
+                        th:text="${monstre.nom}">Nom</h3>
+                    <p style="color: #b0b0b0; font-size: 0.9rem; margin-bottom: 1.5rem;">
+                        Niveau <span th:text="${monstre.niveau}">1</span>
+                    </p>
+
+                    <!-- Barre de PV -->
+                    <div style="margin-bottom: 1rem;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span style="color: #ff6b6b; font-weight: 600; font-size: 0.85rem;">❤️ PV</span>
+                            <span style="color: white; font-weight: 700;" th:text="${monstre.pv} + '/' + ${monstre.pvMax}">0/0</span>
+                        </div>
+                        <div style="background: rgba(255, 255, 255, 0.1); height: 8px; border-radius: 4px; overflow: hidden;">
+                            <div style="background: linear-gradient(90deg, #ff6b6b, #ff4444); height: 100%; border-radius: 4px; transition: width 0.3s ease;"
+                                 th:style="'width: ' + ${(monstre.pv * 100.0 / monstre.pvMax)} + '%'"></div>
+                        </div>
+                    </div>
+
+                    <!-- Statistiques -->
+                    <div style="background: rgba(0, 0, 0, 0.3); border-radius: 8px; padding: 0.8rem; margin-bottom: 1rem;">
+                        <div style="display: flex; justify-content: space-around; font-size: 0.9rem;">
+                            <span style="color: #ffa502;">⚔️ <strong th:text="${monstre.attaque}">0</strong></span>
+                            <span style="color: #4facfe;">🛡️ <strong th:text="${monstre.defense}">0</strong></span>
+                        </div>
+                    </div>
+
+                    <!-- Bouton retirer -->
+                    <form th:action="@{'/monsters-web/joueur/equipe/desactiver/' + ${monstre.id}}" method="post" style="margin: 0;">
+                        <button type="submit"
+                                style="width: 100%; background: linear-gradient(135deg, rgba(220, 53, 69, 0.3), rgba(220, 53, 69, 0.1)); border: 2px solid rgba(220, 53, 69, 0.5); color: #dc3545; padding: 0.8rem; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 0.9rem; transition: all 0.3s ease;">
+                            ➖ Retirer de l'équipe
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Monstres en Réserve -->
+        <div>
+            <h2 style="color: #b0b0b0; margin-bottom: 2rem; font-size: 2rem; text-align: center;">📦 Monstres en Réserve</h2>
+
+            <div th:if="${monstresReserve.isEmpty()}"
+                 style="background: rgba(255, 255, 255, 0.05); border: 2px dashed rgba(255, 255, 255, 0.2); border-radius: 12px; padding: 3rem; text-align: center;">
+                <p style="color: #b0b0b0; font-size: 1.1rem;">
+                    Aucun monstre en réserve.<br>
+                    Tous vos monstres sont dans l'équipe active ou vous n'avez pas encore capturé de nouveaux monstres !
+                </p>
+            </div>
+
+            <div th:unless="${monstresReserve.isEmpty()}"
+                 style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem;">
+
+                <div th:each="monstre : ${monstresReserve}"
+                     class="monster-card"
+                     style="background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03)); border: 2px solid rgba(255, 255, 255, 0.2); border-radius: 16px; padding: 1.5rem; transition: all 0.3s ease; position: relative; overflow: hidden; opacity: 0.8;">
+
+                    <!-- Type -->
+                    <div style="display: inline-block; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 15px; padding: 0.2rem 0.8rem; font-size: 0.75rem; font-weight: 600; color: #b0b0b0; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1rem;">
+                        <span th:text="${monstre.espece.type}">Type</span>
+                    </div>
+
+                    <!-- Nom et niveau -->
+                    <h3 style="color: #b0b0b0; font-size: 1.5rem; margin-bottom: 0.3rem; font-weight: 800;"
+                        th:text="${monstre.nom}">Nom</h3>
+                    <p style="color: #808080; font-size: 0.9rem; margin-bottom: 1.5rem;">
+                        Niveau <span th:text="${monstre.niveau}">1</span>
+                    </p>
+
+                    <!-- Barre de PV -->
+                    <div style="margin-bottom: 1rem;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span style="color: #ff6b6b; font-weight: 600; font-size: 0.85rem;">❤️ PV</span>
+                            <span style="color: white; font-weight: 700;" th:text="${monstre.pv} + '/' + ${monstre.pvMax}">0/0</span>
+                        </div>
+                        <div style="background: rgba(255, 255, 255, 0.1); height: 8px; border-radius: 4px; overflow: hidden;">
+                            <div style="background: linear-gradient(90deg, #ff6b6b, #ff4444); height: 100%; border-radius: 4px; transition: width 0.3s ease;"
+                                 th:style="'width: ' + ${(monstre.pv * 100.0 / monstre.pvMax)} + '%'"></div>
+                        </div>
+                    </div>
+
+                    <!-- Statistiques -->
+                    <div style="background: rgba(0, 0, 0, 0.3); border-radius: 8px; padding: 0.8rem; margin-bottom: 1rem;">
+                        <div style="display: flex; justify-content: space-around; font-size: 0.9rem;">
+                            <span style="color: #ffa502;">⚔️ <strong th:text="${monstre.attaque}">0</strong></span>
+                            <span style="color: #4facfe;">🛡️ <strong th:text="${monstre.defense}">0</strong></span>
+                        </div>
+                    </div>
+
+                    <!-- Bouton ajouter -->
+                    <form th:action="@{'/monsters-web/joueur/equipe/activer/' + ${monstre.id}}" method="post" style="margin: 0;">
+                        <button type="submit"
+                                th:disabled="${!peutAjouter}"
+                                style="width: 100%; border: 2px solid; padding: 0.8rem; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 0.9rem; transition: all 0.3s ease;"
+                                th:style="${peutAjouter ? 'background: linear-gradient(135deg, rgba(127, 255, 0, 0.3), rgba(127, 255, 0, 0.1)); border-color: rgba(127, 255, 0, 0.5); color: #7FFF00;' : 'background: rgba(100, 100, 100, 0.2); border-color: rgba(100, 100, 100, 0.3); color: #666; cursor: not-allowed;'}">
+                            ➕ Ajouter à l'équipe
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bouton retour -->
+        <div style="text-align: center; margin-top: 3rem;">
+            <a th:href="@{/monsters-web/joueur/zone}"
+               style="display: inline-block; background: rgba(127, 255, 0, 0.1); border: 2px solid rgba(127, 255, 0, 0.3); color: #7FFF00; padding: 1rem 2rem; border-radius: 10px; text-decoration: none; font-weight: 600; transition: all 0.3s ease;">
+                🗺️ Retour à la zone
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .monster-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 40px rgba(127, 255, 0, 0.2);
+    }
+
+    button:not(:disabled):hover {
+        transform: scale(1.05);
+    }
+</style>
+</body>
+</html>

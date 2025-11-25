@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org" th:replace="~{base :: html}">
+<head>
+    <meta charset="UTF-8">
+    <title>Monsters Web - Résultat du Combat</title>
+    <style>
+        @keyframes celebration {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.1) rotate(-5deg); }
+            75% { transform: scale(1.1) rotate(5deg); }
+        }
+
+        .victory {
+            animation: celebration 1s ease-in-out infinite;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .defeat {
+            animation: shake 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+<div th:fragment="content">
+    <div style="max-width: 900px; margin: 3rem auto; padding: 0 2rem;">
+
+        <!-- Carte de résultat -->
+        <div th:if="${resultat.victoire}"
+             th:class="'victory'"
+             style="background: linear-gradient(145deg, rgba(127, 255, 0, 0.2) 0%, rgba(127, 255, 0, 0.1) 100%); border: 4px solid #7FFF00; border-radius: 24px; padding: 3rem; text-align: center; box-shadow: 0 20px 60px rgba(127, 255, 0, 0.4);">
+
+            <div style="font-size: 8rem; margin-bottom: 1rem;">🏆</div>
+
+            <h1 style="color: #7FFF00; margin-bottom: 1rem; font-size: 3rem; text-shadow: 0 0 30px rgba(127, 255, 0, 0.8);">
+                VICTOIRE !
+            </h1>
+
+            <p style="color: #b0b0b0; font-size: 1.3rem; margin-bottom: 2rem;">
+                Félicitations ! Vous avez vaincu <span style="color: #FF4500; font-weight: 700;" th:text="${combat.monstreAdverse.nom}">l'adversaire</span> !
+            </p>
+
+            <!-- Récompenses -->
+            <div style="background: rgba(0, 0, 0, 0.4); padding: 2rem; border-radius: 16px; margin: 2rem 0;">
+                <h2 style="color: #7FFF00; margin-bottom: 1.5rem;">🎁 Récompenses</h2>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                    <div style="background: rgba(127, 255, 0, 0.1); padding: 1.5rem; border-radius: 12px; border: 2px solid rgba(127, 255, 0, 0.3);">
+                        <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">⭐</div>
+                        <p style="color: #b0b0b0; margin-bottom: 0.5rem;">Expérience</p>
+                        <p style="color: #7FFF00; font-size: 2rem; font-weight: 900;">
+                            +<span th:text="${resultat.experienceGagnee}">50</span> XP
+                        </p>
+                    </div>
+
+                    <div style="background: rgba(255, 215, 0, 0.1); padding: 1.5rem; border-radius: 12px; border: 2px solid rgba(255, 215, 0, 0.5);">
+                        <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">💰</div>
+                        <p style="color: #b0b0b0; margin-bottom: 0.5rem;">Pièces d'or</p>
+                        <p style="color: #FFD700; font-size: 2rem; font-weight: 900;">
+                            +<span th:text="${resultat.orGagne}">25</span> Or
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div th:unless="${resultat.victoire}"
+             th:class="'defeat'"
+             style="background: linear-gradient(145deg, rgba(220, 53, 69, 0.2) 0%, rgba(220, 53, 69, 0.1) 100%); border: 4px solid #dc3545; border-radius: 24px; padding: 3rem; text-align: center; box-shadow: 0 20px 60px rgba(220, 53, 69, 0.4);">
+
+            <div style="font-size: 8rem; margin-bottom: 1rem;">💀</div>
+
+            <h1 style="color: #dc3545; margin-bottom: 1rem; font-size: 3rem; text-shadow: 0 0 30px rgba(220, 53, 69, 0.8);">
+                DÉFAITE
+            </h1>
+
+            <p style="color: #b0b0b0; font-size: 1.3rem; margin-bottom: 2rem;">
+                Votre monstre <span style="color: #7FFF00; font-weight: 700;" th:text="${combat.monstreJoueur.nom}"></span> a été vaincu...
+            </p>
+
+            <div style="background: rgba(0, 0, 0, 0.4); padding: 2rem; border-radius: 16px; margin: 2rem 0;">
+                <p style="color: #b0b0b0; font-size: 1.1rem;">
+                    Ne vous découragez pas ! Entraînez vos monstres et revenez plus fort !
+                </p>
+            </div>
+        </div>
+
+        <!-- Historique du combat -->
+        <div style="background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(127, 255, 0, 0.3); border-radius: 16px; padding: 2rem; margin: 2rem 0;">
+            <h3 style="color: #7FFF00; margin-bottom: 1.5rem;">📜 Récapitulatif du Combat</h3>
+
+            <div style="max-height: 300px; overflow-y: auto;">
+                <div th:each="message, iterStat : ${combat.historique}"
+                     style="background: rgba(0, 0, 0, 0.3); padding: 0.8rem; border-radius: 8px; margin-bottom: 0.5rem; color: #b0b0b0;">
+                    <span th:text="${iterStat.count} + '. ' + ${message}"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Actions -->
+        <div style="display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;">
+            <a th:href="@{/joueur/combat}"
+               style="display: inline-block; background: linear-gradient(135deg, #7FFF00 0%, #00ff88 100%); color: #1C1E26; padding: 1.2rem 2.5rem; border-radius: 12px; text-decoration: none; font-weight: 800; font-size: 1.1rem; transition: all 0.3s ease;">
+                🔄 Nouveau Combat
+            </a>
+
+            <a th:href="@{/joueur/mon-equipe}"
+               style="display: inline-block; background: linear-gradient(135deg, rgba(0, 123, 255, 0.8) 0%, rgba(0, 86, 179, 0.8) 100%); color: white; padding: 1.2rem 2.5rem; border-radius: 12px; text-decoration: none; font-weight: 700; font-size: 1.1rem; transition: all 0.3s ease;">
+                ⚔️ Mon Équipe
+            </a>
+
+            <a th:href="@{/joueur/profil}"
+               style="display: inline-block; background: rgba(255, 255, 255, 0.1); border: 2px solid rgba(127, 255, 0, 0.3); color: #7FFF00; padding: 1.2rem 2.5rem; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 1.1rem; transition: all 0.3s ease;">
+                🏠 Profil
+            </a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

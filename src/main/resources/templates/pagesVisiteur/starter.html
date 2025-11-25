@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org" th:replace="~{base :: html}">
+<head>
+    <meta charset="UTF-8">
+    <title>Monsters Web - Choisir votre Starter</title>
+</head>
+<body>
+<div th:fragment="content">
+    <div style="max-width: 1400px; margin: 2rem auto; padding: 2rem;">
+
+        <!-- En-tête -->
+        <div style="text-align: center; margin-bottom: 4rem;">
+            <h1 style="color: #7FFF00; font-size: 3rem; margin-bottom: 1rem;">
+                🌟 Choisissez votre Premier Monstre !
+            </h1>
+            <p style="color: #b0b0b0; font-size: 1.2rem; line-height: 1.8;">
+                Votre aventure commence ici. Choisissez le monstre qui vous accompagnera<br>
+                dans votre quête pour devenir le meilleur dresseur !
+            </p>
+        </div>
+
+        <!-- Grille des starters -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 3rem; margin-bottom: 3rem;">
+
+            <div th:each="starter : ${starters}"
+                 style="background: linear-gradient(145deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%); border: 2px solid rgba(127, 255, 0, 0.3); border-radius: 20px; padding: 2.5rem; text-align: center; position: relative; overflow: hidden; transition: all 0.4s ease;">
+
+                <!-- Effet de brillance au survol -->
+                <div style="position: absolute; top: -50%; right: -50%; width: 200%; height: 200%; background: linear-gradient(45deg, transparent 30%, rgba(127, 255, 0, 0.05) 50%, transparent 70%); transform: rotate(45deg); pointer-events: none;"></div>
+
+                <!-- Type du monstre -->
+                <div style="display: inline-block; background: rgba(127, 255, 0, 0.2); border: 1px solid rgba(127, 255, 0, 0.5); border-radius: 20px; padding: 0.3rem 1rem; font-size: 0.85rem; font-weight: 600; color: #7FFF00; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1.5rem;">
+                    <span th:text="${starter.espece.type}">Type</span>
+                </div>
+
+                <!-- Nom du monstre -->
+                <h2 style="color: #7FFF00; font-size: 2rem; margin-bottom: 0.5rem; font-weight: 800;"
+                    th:text="${starter.nom}">Nom Monstre</h2>
+
+                <p style="color: #b0b0b0; font-size: 0.9rem; margin-bottom: 2rem;">
+                    Niveau <span th:text="${starter.niveau}">5</span>
+                </p>
+
+                <!-- Description -->
+                <p style="color: #b0b0b0; line-height: 1.6; margin-bottom: 2rem; min-height: 60px;"
+                   th:text="${starter.espece.description}">Description du monstre</p>
+
+                <!-- Statistiques -->
+                <div style="background: rgba(0, 0, 0, 0.4); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem;">
+                    <h4 style="color: #7FFF00; margin-bottom: 1.5rem; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px;">
+                        📊 Statistiques
+                    </h4>
+
+                    <div style="display: grid; gap: 1rem;">
+                        <!-- PV -->
+                        <div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                <span style="color: #ff6b6b; font-weight: 600; font-size: 0.9rem;">❤️ Points de Vie</span>
+                                <span style="color: white; font-weight: 700;" th:text="${starter.pvMax}">0</span>
+                            </div>
+                            <div style="background: rgba(255, 255, 255, 0.1); height: 8px; border-radius: 4px; overflow: hidden;">
+                                <div style="background: linear-gradient(90deg, #ff6b6b, #ff4444); height: 100%; border-radius: 4px;"
+                                     th:style="'width: ' + ${starter.pvMax}"></div>
+                            </div>
+                        </div>
+
+                        <!-- Attaque -->
+                        <div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                <span style="color: #ffa502; font-weight: 600; font-size: 0.9rem;">⚔️ Attaque</span>
+                                <span style="color: white; font-weight: 700;" th:text="${starter.attaque}">0</span>
+                            </div>
+                            <div style="background: rgba(255, 255, 255, 0.1); height: 8px; border-radius: 4px; overflow: hidden;">
+                                <div style="background: linear-gradient(90deg, #ffa502, #ff6348); height: 100%; border-radius: 4px;"
+                                     th:style="'width: ' + ${(starter.attaque * 1.5)} + '%'"></div>
+                            </div>
+                        </div>
+
+                        <!-- Défense -->
+                        <div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                <span style="color: #4facfe; font-weight: 600; font-size: 0.9rem;">🛡️ Défense</span>
+                                <span style="color: white; font-weight: 700;" th:text="${starter.defense}">0</span>
+                            </div>
+                            <div style="background: rgba(255, 255, 255, 0.1); height: 8px; border-radius: 4px; overflow: hidden;">
+                                <div style="background: linear-gradient(90deg, #4facfe, #00f2fe); height: 100%; border-radius: 4px;"
+                                     th:style="'width: ' + ${(starter.defense * 2)} + '%'"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bouton de sélection -->
+                <a th:href="@{'/monsters-web/joueur/starter/' + ${starter.espece.id}}"
+                   onclick="return confirm('Êtes-vous sûr de vouloir choisir ce monstre ? Ce choix est définitif !');"
+                   style="display: block; background: linear-gradient(135deg, #7FFF00 0%, #00ff88 100%); color: #1C1E26; padding: 1.2rem 2rem; border-radius: 12px; text-decoration: none; font-weight: 800; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s ease; box-shadow: 0 8px 25px rgba(127, 255, 0, 0.4);">
+                    ✨ Choisir <span th:text="${starter.nom}"></span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Conseil -->
+        <div style="background: rgba(127, 255, 0, 0.1); border: 2px solid rgba(127, 255, 0, 0.3); border-radius: 12px; padding: 2rem; text-align: center;">
+            <h3 style="color: #7FFF00; margin-bottom: 1rem;">💡 Conseil du Professeur</h3>
+            <p style="color: #b0b0b0; line-height: 1.8;">
+                Chaque monstre a ses propres forces et faiblesses. Choisissez celui qui correspond<br>
+                le mieux à votre style de jeu ! Vous pourrez capturer d'autres monstres plus tard.
+            </p>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Animation au survol des cartes */
+    div[th\\:each] {
+        cursor: pointer;
+    }
+
+    div[th\\:each]:hover {
+                      transform: translateY(-10px) scale(1.02);
+                      border-color: #7FFF00;
+                      box-shadow: 0 20px 60px rgba(127, 255, 0, 0.3), 0 0 0 1px #7FFF00 inset;
+                  }
+
+    div[th\\:each]:hover a {
+                      transform: scale(1.05);
+                      box-shadow: 0 12px 35px rgba(127, 255, 0, 0.6);
+                  }
+</style>
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org" th:replace="~{base :: html}">
+<head>
+    <meta charset="UTF-8">
+    <title>Monsters Web - Combat en cours</title>
+    <style>
+        .hp-bar {
+            width: 100%;
+            height: 30px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 2px solid rgba(127, 255, 0, 0.3);
+        }
+
+        .hp-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff4444 0%, #ff6666 50%, #ff4444 100%);
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .hp-fill.high {
+            background: linear-gradient(90deg, #00ff00 0%, #44ff44 50%, #00ff00 100%);
+        }
+
+        .hp-fill.medium {
+            background: linear-gradient(90deg, #ffaa00 0%, #ffcc00 50%, #ffaa00 100%);
+        }
+
+        .combat-log {
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px solid rgba(127, 255, 0, 0.3);
+            border-radius: 12px;
+            padding: 1.5rem;
+            max-height: 200px;
+            overflow-y: auto;
+            margin: 2rem 0;
+        }
+
+        .combat-log p {
+            color: #b0b0b0;
+            margin: 0.5rem 0;
+            padding: 0.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+        }
+
+        .combat-log p:last-child {
+            color: #7FFF00;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+<div th:fragment="content">
+    <div style="max-width: 1400px; margin: 2rem auto; padding: 0 2rem;">
+        <h1 style="text-align: center; color: #FF4500; margin-bottom: 2rem; text-shadow: 0 0 30px rgba(255, 69, 0, 0.8);">
+            ⚔️ COMBAT EN COURS
+        </h1>
+
+        <!-- Terrain de combat -->
+        <div style="display: grid; grid-template-columns: 1fr auto 1fr; gap: 2rem; align-items: center; margin-bottom: 2rem;">
+
+            <!-- Monstre du joueur -->
+            <div style="background: linear-gradient(145deg, rgba(127, 255, 0, 0.15) 0%, rgba(127, 255, 0, 0.05) 100%); border: 3px solid #7FFF00; border-radius: 20px; padding: 2rem; text-align: center;">
+                <p style="color: #7FFF00; font-weight: 700; margin-bottom: 1rem;">VOTRE MONSTRE</p>
+
+                <div style="font-size: 5rem; margin: 1rem 0;">🐉</div>
+
+                <h2 style="color: #7FFF00; margin-bottom: 1rem;" th:text="${combat.monstreJoueur.nom}">Flamby</h2>
+                <p style="color: #b0b0b0; margin-bottom: 1rem;">
+                    Niveau <span th:text="${combat.monstreJoueur.niveau}">5</span>
+                </p>
+
+                <!-- Barre de vie -->
+                <div class="hp-bar" style="margin-bottom: 1rem;">
+                    <div class="hp-fill"
+                         th:classappend="${combat.monstreJoueur.pv > combat.monstreJoueur.pvMax * 0.6} ? 'high' : (${combat.monstreJoueur.pv > combat.monstreJoueur.pvMax * 0.3} ? 'medium' : '')"
+                         th:style="'width: ' + ${(combat.monstreJoueur.pv * 100) / combat.monstreJoueur.pvMax} + '%'">
+                        <span th:text="${combat.monstreJoueur.pv} + ' / ' + ${combat.monstreJoueur.pvMax}">100 / 145</span>
+                    </div>
+                </div>
+
+                <!-- Stats -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; font-size: 0.9rem;">
+                    <div style="background: rgba(0, 0, 0, 0.3); padding: 0.5rem; border-radius: 6px;">
+                        <p style="color: #b0b0b0; margin: 0;">⚔️ Attaque</p>
+                        <p style="color: #fff; font-weight: 700; margin: 0;" th:text="${combat.monstreJoueur.attaque}">55</p>
+                    </div>
+                    <div style="background: rgba(0, 0, 0, 0.3); padding: 0.5rem; border-radius: 6px;">
+                        <p style="color: #b0b0b0; margin: 0;">🛡️ Défense</p>
+                        <p style="color: #fff; font-weight: 700; margin: 0;" th:text="${combat.monstreJoueur.defense}">40</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VS -->
+            <div style="font-size: 3rem; font-weight: 900; color: #FF4500; text-shadow: 0 0 30px rgba(255, 69, 0, 0.8);">
+                VS
+            </div>
+
+            <!-- Monstre adversaire -->
+            <div style="background: linear-gradient(145deg, rgba(255, 69, 0, 0.15) 0%, rgba(255, 69, 0, 0.05) 100%); border: 3px solid #FF4500; border-radius: 20px; padding: 2rem; text-align: center;">
+                <p style="color: #FF4500; font-weight: 700; margin-bottom: 1rem;">ADVERSAIRE</p>
+
+                <div style="font-size: 5rem; margin: 1rem 0;">👹</div>
+
+                <h2 style="color: #FF4500; margin-bottom: 1rem;" th:text="${combat.monstreAdverse.nom}">Dracoflame</h2>
+                <p style="color: #b0b0b0; margin-bottom: 1rem;">
+                    Niveau <span th:text="${combat.monstreAdverse.niveau}">8</span>
+                </p>
+
+                <!-- Barre de vie -->
+                <div class="hp-bar" style="margin-bottom: 1rem;">
+                    <div class="hp-fill"
+                         th:classappend="${combat.monstreAdverse.pv > combat.monstreAdverse.pvMax * 0.6} ? 'high' : (${combat.monstreAdverse.pv > combat.monstreAdverse.pvMax * 0.3} ? 'medium' : '')"
+                         th:style="'width: ' + ${(combat.monstreAdverse.pv * 100) / combat.monstreAdverse.pvMax} + '%'">
+                        <span th:text="${combat.monstreAdverse.pv} + ' / ' + ${combat.monstreAdverse.pvMax}">150 / 150</span>
+                    </div>
+                </div>
+
+                <!-- Stats -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; font-size: 0.9rem;">
+                    <div style="background: rgba(0, 0, 0, 0.3); padding: 0.5rem; border-radius: 6px;">
+                        <p style="color: #b0b0b0; margin: 0;">⚔️ Attaque</p>
+                        <p style="color: #fff; font-weight: 700; margin: 0;" th:text="${combat.monstreAdverse.attaque}">65</p>
+                    </div>
+                    <div style="background: rgba(0, 0, 0, 0.3); padding: 0.5rem; border-radius: 6px;">
+                        <p style="color: #b0b0b0; margin: 0;">🛡️ Défense</p>
+                        <p style="color: #fff; font-weight: 700; margin: 0;" th:text="${combat.monstreAdverse.defense}">45</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Journal de combat -->
+        <div class="combat-log">
+            <p th:each="message : ${combat.historique}" th:text="${message}">Le combat commence !</p>
+            <p th:if="${combat.historique.isEmpty()}">Le combat commence ! À vous de jouer !</p>
+        </div>
+
+        <!-- Actions de combat -->
+        <div style="display: flex; gap: 1.5rem; justify-content: center; margin-bottom: 2rem;"
+             th:if="${combat.tourJoueur}">
+
+            <form th:action="@{/joueur/combat/attaquer}" method="post" style="display: inline;">
+                <button type="submit"
+                        style="background: linear-gradient(135deg, #FF4500 0%, #ff6b35 100%); color: white; border: none; padding: 1.2rem 2.5rem; border-radius: 12px; font-weight: 800; font-size: 1.1rem; cursor: pointer; transition: all 0.3s ease;">
+                    ⚔️ ATTAQUER
+                </button>
+            </form>
+
+            <form th:action="@{/joueur/combat/defendre}" method="post" style="display: inline;">
+                <button type="submit"
+                        style="background: linear-gradient(135deg, #007bff 0%, #0056b3 100%); color: white; border: none; padding: 1.2rem 2.5rem; border-radius: 12px; font-weight: 800; font-size: 1.1rem; cursor: pointer; transition: all 0.3s ease;">
+                    🛡️ DÉFENDRE
+                </button>
+            </form>
+
+            <form th:action="@{/joueur/combat/abandonner}" method="post" style="display: inline;">
+                <button type="submit"
+                        onclick="return confirm('Voulez-vous vraiment abandonner ?')"
+                        style="background: rgba(220, 53, 69, 0.2); border: 2px solid #dc3545; color: #dc3545; padding: 1.2rem 2.5rem; border-radius: 12px; font-weight: 700; font-size: 1.1rem; cursor: pointer; transition: all 0.3s ease;">
+                    🏳️ ABANDONNER
+                </button>
+            </form>
+        </div>
+
+        <div th:unless="${combat.tourJoueur}"
+             style="text-align: center; padding: 1.5rem; background: rgba(255, 69, 0, 0.1); border: 2px solid #FF4500; border-radius: 12px;">
+            <p style="color: #FF4500; font-size: 1.2rem; font-weight: 700; margin: 0;">
+                🕐 Tour de l'adversaire...
+            </p>
+        </div>
+    </div>
+</div>
+</body>
+</html>

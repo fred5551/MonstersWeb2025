@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org" th:replace="~{base :: html}">
+<head>
+    <meta charset="UTF-8">
+    <title>Monsters Web - Préparer le Combat</title>
+</head>
+<body>
+<div th:fragment="content">
+    <div style="max-width: 1400px; margin: 2rem auto; padding: 2rem;">
+
+        <!-- En-tête -->
+        <div style="text-align: center; margin-bottom: 3rem;">
+            <h1 style="color: #FF4500; font-size: 3rem; margin-bottom: 1rem; text-shadow: 0 0 30px rgba(255, 69, 0, 0.8);">
+                ⚔️ Arène de Combat
+            </h1>
+            <p style="color: #b0b0b0; font-size: 1.1rem;">
+                Choisissez votre monstre et votre adversaire pour commencer le combat !
+            </p>
+        </div>
+
+        <!-- Message d'erreur si pas de monstre -->
+        <div th:if="${error}"
+             style="background: rgba(220, 53, 69, 0.2); border: 2px solid #dc3545; padding: 2rem; border-radius: 12px; margin-bottom: 2rem; text-align: center;">
+            <p style="color: #dc3545; font-size: 1.2rem; font-weight: 600; margin-bottom: 1rem;">⚠️ Attention</p>
+            <p style="color: #b0b0b0;" th:text="${error}"></p>
+            <a th:href="@{/monsters-web/joueur/zone}"
+               style="display: inline-block; margin-top: 1rem; background: #7FFF00; color: #1C1E26; padding: 0.8rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 700;">
+                🗺️ Retour à la zone
+            </a>
+        </div>
+
+        <div th:unless="${error}">
+            <!-- Sélection du monstre -->
+            <div style="margin-bottom: 4rem;">
+                <h2 style="color: #7FFF00; text-align: center; margin-bottom: 2rem; font-size: 2rem;">
+                    👾 1. Choisissez votre Monstre
+                </h2>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem;">
+                    <div th:each="monstre : ${monstresActifs}"
+                         th:id="'monster-' + ${monstre.id}"
+                         class="selectable-monster"
+                         onclick="selectMonster(this)"
+                         th:attr="data-monster-id=${monstre.id}"
+                         style="background: linear-gradient(145deg, rgba(127, 255, 0, 0.08), rgba(127, 255, 0, 0.03)); border: 2px solid rgba(127, 255, 0, 0.3); border-radius: 16px; padding: 1.5rem; cursor: pointer; transition: all 0.3s ease; position: relative;">
+
+                        <!-- Icône sélectionné (caché par défaut) -->
+                        <div class="selected-icon" style="position: absolute; top: 1rem; right: 1rem; background: #7FFF00; color: #1C1E26; width: 35px; height: 35px; border-radius: 50%; display: none; align-items: center; justify-content: center; font-weight: 900; font-size: 1.2rem;">
+                            ✓
+                        </div>
+
+                        <!-- Type -->
+                        <div style="display: inline-block; background: rgba(127, 255, 0, 0.2); border: 1px solid rgba(127, 255, 0, 0.5); border-radius: 15px; padding: 0.2rem 0.8rem; font-size: 0.75rem; font-weight: 600; color: #7FFF00; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1rem;">
+                            <span th:text="${monstre.espece.type}">Type</span>
+                        </div>
+
+                        <!-- Nom et niveau -->
+                        <h3 style="color: #7FFF00; font-size: 1.5rem; margin-bottom: 0.3rem; font-weight: 800;"
+                            th:text="${monstre.nom}">Nom</h3>
+                        <p style="color: #b0b0b0; font-size: 0.9rem; margin-bottom: 1.5rem;">
+                            Niveau <span th:text="${monstre.niveau}">1</span>
+                        </p>
+
+                        <!-- Barre de PV -->
+                        <div style="margin-bottom: 1rem;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                <span style="color: #ff6b6b; font-weight: 600; font-size: 0.85rem;">❤️ PV</span>
+                                <span style="color: white; font-weight: 700;" th:text="${monstre.pv} + '/' + ${monstre.pvMax}">0/0</span>
+                            </div>
+                            <div style="background: rgba(255, 255, 255, 0.1); height: 8px; border-radius: 4px; overflow: hidden;">
+                                <div style="background: linear-gradient(90deg, #ff6b6b, #ff4444); height: 100%; border-radius: 4px;"
+                                     th:style="'width: ' + ${(monstre.pv * 100.0 / monstre.pvMax)} + '%'"></div>
+                            </div>
+                        </div>
+
+                        <!-- Stats -->
+                        <div style="background: rgba(0, 0, 0, 0.3); border-radius: 8px; padding: 0.8rem;">
+                            <div style="display: flex; justify-content: space-around; font-size: 0.9rem;">
+                                <span style="color: #ffa502;">⚔️ <strong th:text="${monstre.attaque}">0</strong></span>
+                                <span style="color: #4facfe;">🛡️ <strong th:text="${monstre.defense}">0</strong></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sélection de la difficulté -->
+            <div>
+                <h2 style="color: #FF4500; text-align: center; margin-bottom: 2rem; font-size: 2rem;">
+                    🎯 2. Choisissez un Adversaire
+                </h2>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem;">
+
+                    <!-- Facile -->
+                    <div class="difficulty-card" data-difficulty="facile"
+                         style="background: linear-gradient(145deg, rgba(50, 205, 50, 0.15), rgba(50, 205, 50, 0.05)); border: 2px solid rgba(50, 205, 50, 0.5); border-radius: 20px; padding: 2.5rem; text-align: center; transition: all 0.3s ease;">
+                        <div style="font-size: 4rem; margin-bottom: 1rem;">🌱</div>
+                        <h3 style="color: #32CD32; font-size: 2rem; margin-bottom: 0.5rem; font-weight: 800;">Débutant</h3>
+                        <p style="color: #90EE90; font-size: 0.9rem; margin-bottom: 1.5rem;">Niveau 1-3</p>
+                        <p style="color: #b0b0b0; line-height: 1.6; margin-bottom: 2rem;">
+                            Adversaire faible, parfait pour s'entraîner et gagner de l'expérience facilement.
+                        </p>
+                        <div style="background: rgba(0, 0, 0, 0.4); border-radius: 8px; padding: 1rem; margin-bottom: 1.5rem;">
+                            <p style="color: #32CD32; font-size: 0.9rem; font-weight: 600;">
+                                💰 Récompense: 30-50 pièces
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Moyen -->
+                    <div class="difficulty-card" data-difficulty="moyen"
+                         style="background: linear-gradient(145deg, rgba(255, 165, 0, 0.15), rgba(255, 165, 0, 0.05)); border: 2px solid rgba(255, 165, 0, 0.5); border-radius: 20px; padding: 2.5rem; text-align: center; transition: all 0.3s ease;">
+                        <div style="font-size: 4rem; margin-bottom: 1rem;">⚡</div>
+                        <h3 style="color: #FFA500; font-size: 2rem; margin-bottom: 0.5rem; font-weight: 800;">Intermédiaire</h3>
+                        <p style="color: #FFD700; font-size: 0.9rem; margin-bottom: 1.5rem;">Niveau 4-7</p>
+                        <p style="color: #b0b0b0; line-height: 1.6; margin-bottom: 2rem;">
+                            Adversaire équilibré offrant un bon défi pour tester vos compétences.
+                        </p>
+                        <div style="background: rgba(0, 0, 0, 0.4); border-radius: 8px; padding: 1rem; margin-bottom: 1.5rem;">
+                            <p style="color: #FFA500; font-size: 0.9rem; font-weight: 600;">
+                                💰 Récompense: 70-100 pièces
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Difficile -->
+                    <div class="difficulty-card" data-difficulty="difficile"
+                         style="background: linear-gradient(145deg, rgba(220, 20, 60, 0.15), rgba(220, 20, 60, 0.05)); border: 2px solid rgba(220, 20, 60, 0.5); border-radius: 20px; padding: 2.5rem; text-align: center; transition: all 0.3s ease;">
+                        <div style="font-size: 4rem; margin-bottom: 1rem;">💀</div>
+                        <h3 style="color: #DC143C; font-size: 2rem; margin-bottom: 0.5rem; font-weight: 800;">Expert</h3>
+                        <p style="color: #FF6B6B; font-size: 0.9rem; margin-bottom: 1.5rem;">Niveau 8-12</p>
+                        <p style="color: #b0b0b0; line-height: 1.6; margin-bottom: 2rem;">
+                            Adversaire redoutable ! Seuls les meilleurs dresseurs peuvent espérer gagner.
+                        </p>
+                        <div style="background: rgba(0, 0, 0, 0.4); border-radius: 8px; padding: 1rem; margin-bottom: 1.5rem;">
+                            <p style="color: #DC143C; font-size: 0.9rem; font-weight: 600;">
+                                💰 Récompense: 120-200 pièces
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Formulaire caché pour soumettre -->
+            <form id="combatForm" th:action="@{/monsters-web/joueur/combat/lancer}" method="post" style="display: none;">
+                <input type="hidden" id="idMonstre" name="idMonstre" value="">
+                <input type="hidden" id="difficulte" name="difficulte" value="">
+            </form>
+
+            <!-- Bouton de lancement -->
+            <div style="text-align: center; margin-top: 3rem;">
+                <button id="startCombatBtn" onclick="startCombat()" disabled
+                        style="background: linear-gradient(135deg, #FF4500 0%, #ff6b35 100%); color: white; border: none; padding: 1.5rem 3rem; border-radius: 12px; cursor: not-allowed; font-weight: 800; font-size: 1.2rem; text-transform: uppercase; letter-spacing: 2px; opacity: 0.5; transition: all 0.3s ease;">
+                    ⚔️ Lancer le Combat
+                </button>
+                <p id="selectionStatus" style="color: #b0b0b0; margin-top: 1rem; font-size: 0.9rem;">
+                    Sélectionnez un monstre et une difficulté pour continuer
+                </p>
+            </div>
+
+            <!-- Bouton retour -->
+            <div style="text-align: center; margin-top: 2rem;">
+                <a th:href="@{/monsters-web/joueur/zone}"
+                   style="display: inline-block; background: rgba(127, 255, 0, 0.1); border: 2px solid rgba(127, 255, 0, 0.3); color: #7FFF00; padding: 1rem 2rem; border-radius: 10px; text-decoration: none; font-weight: 600;">
+                    🗺️ Retour à la zone
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let selectedMonsterId = null;
+    let selectedDifficulty = null;
+
+    function selectMonster(element) {
+        // Retirer la sélection précédente
+        document.querySelectorAll('.selectable-monster').forEach(el => {
+            el.style.borderColor = 'rgba(127, 255, 0, 0.3)';
+            el.style.boxShadow = 'none';
+            el.querySelector('.selected-icon').style.display = 'none';
+        });
+
+        // Appliquer la nouvelle sélection
+        element.style.borderColor = '#7FFF00';
+        element.style.boxShadow = '0 0 30px rgba(127, 255, 0, 0.5)';
+        element.querySelector('.selected-icon').style.display = 'flex';
+
+        selectedMonsterId = element.getAttribute('data-monster-id');
+        updateStartButton();
+    }
+
+    // Ajouter les écouteurs pour les cartes de difficulté
+    document.querySelectorAll('.difficulty-card').forEach(card => {
+        card.addEventListener('click', function() {
+            // Retirer la sélection précédente
+            document.querySelectorAll('.difficulty-card').forEach(el => {
+                el.style.transform = 'scale(1)';
+                el.style.boxShadow = 'none';
+            });
+
+            // Appliquer la nouvelle sélection
+            this.style.transform = 'scale(1.05)';
+            this.style.boxShadow = '0 15px 40px rgba(255, 69, 0, 0.4)';
+
+            selectedDifficulty = this.getAttribute('data-difficulty');
+            updateStartButton();
+        });
+    });
+
+    function updateStartButton() {
+        const btn = document.getElementById('startCombatBtn');
+        const status = document.getElementById('selectionStatus');
+
+        if (selectedMonsterId && selectedDifficulty) {
+            btn.disabled = false;
+            btn.style.cursor = 'pointer';
+            btn.style.opacity = '1';
+            status.textContent = '✓ Prêt à combattre !';
+            status.style.color = '#7FFF00';
+        } else {
+            btn.disabled = true;
+            btn.style.cursor = 'not-allowed';
+            btn.style.opacity = '0.5';
+
+            if (!selectedMonsterId && !selectedDifficulty) {
+                status.textContent = 'Sélectionnez un monstre et une difficulté';
+            } else if (!selectedMonsterId) {
+                status.textContent = 'Sélectionnez un monstre';
+            } else {
+                status.textContent = 'Sélectionnez une difficulté';
+            }
+            status.style.color = '#b0b0b0';
+        }
+    }
+
+    function startCombat() {
+        if (selectedMonsterId && selectedDifficulty) {
+            document.getElementById('idMonstre').value = selectedMonsterId;
+            document.getElementById('difficulte').value = selectedDifficulty;
+            document.getElementById('combatForm').submit();
+        }
+    }
+</script>
+
+<style>
+    .difficulty-card {
+        cursor: pointer;
+    }
+
+    .difficulty-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .selectable-monster:hover {
+        transform: translateY(-5px);
+    }
+
+    #startCombatBtn:not(:disabled):hover {
+        transform: scale(1.05);
+        box-shadow: 0 15px 40px rgba(255, 69, 0, 0.6);
+    }
+</style>
+</body>
+</html>

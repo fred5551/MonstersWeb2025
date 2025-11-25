@@ -57,7 +57,8 @@ class SecurityConfig {
                     "/exploration",
                     "/mon-equipe",
                     "/inventaire",
-                    "/combat"
+                    "/combat",
+                    "/joueur/**"
                 ).hasRole("CLIENT")
 
                 // Toutes les autres requêtes nécessitent une authentification
