@@ -1,5 +1,22 @@
 <!DOCTYPE html>
 <html lang="fr" xmlns:th="http://www.thymeleaf.org" th:replace="~{base :: html}">
+<link rel="stylesheet" href="../../static/css/style.css">
+<header id="header">
+    <div class="header-content">
+        <div class="logo">🐲 Monsters Web</div>
+        <nav id="main-nav">
+            <a class="nav-btn" href=../index.html>Accueil</a>
+            <a class="nav-btn" href="exploration.html">Exploration</a>
+            <a class="nav-btn" href="#">Mon Équipe</a>
+            <a class="nav-btn" href="inventaire.html">Inventaire</a>
+            <a class="nav-btn" href="combat.html">Combat</a>
+        </nav>
+        <div class="user-info">
+            <span id="user-name">Joueur</span>
+            <button id="logout-btn">Déconnexion</button>
+        </div>
+    </div>
+</header>
 <head>
     <meta charset="UTF-8">
     <title>Monsters Web - Mon Équipe</title>

@@ -1,10 +1,27 @@
 <!DOCTYPE html>
 <html lang="fr" xmlns:th="http://www.thymeleaf.org" th:replace="~{base :: html}">
+<link rel="stylesheet" href="../../static/css/style.css">
 <head>
     <meta charset="UTF-8">
     <title>Monsters Web - Combat</title>
 </head>
 <body>
+<header id="header">
+    <div class="header-content">
+        <div class="logo">🐲 Monsters Web</div>
+        <nav id="main-nav">
+            <a class="nav-btn" href=../index.html>Accueil</a>
+            <a class="nav-btn" href="exploration.html">Exploration</a>
+            <a class="nav-btn" href="mon-equipe.html">Mon Équipe</a>
+            <a class="nav-btn" href="inventaire.html">Inventaire</a>
+            <a class="nav-btn" href="combat.html">Combat</a>
+        </nav>
+        <div class="user-info">
+            <span id="user-name">Joueur</span>
+            <button id="logout-btn">Déconnexion</button>
+        </div>
+    </div>
+</header>
 <div th:fragment="content">
     <div class="combat-container">
         <h1 style="text-align: center; color: #7FFF00; margin-bottom: 2rem;">Arène de Combat</h1>
